@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响">
+<meta name="description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc-1 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SecurityCN&#39;s blog">
 <meta property="og:url" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/index.html">
 <meta property="og:site_name" content="SecurityCN&#39;s blog">
-<meta property="og:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响">
+<meta property="og:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc-1 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/2d4bdfef5893c614625d22200e420a74.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/46fd8c6f736390b380364e6d307727ca.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/0aa0ffdb124bb25fa6993dccb7b203c3.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/cccd2fb43f5e1de2656dafd06cbdc8e2.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/deb907880fabab9ca9176b5a50d1d877.png">
-<meta property="og:updated_time" content="2019-10-09T07:19:32.052Z">
+<meta property="og:updated_time" content="2019-10-09T07:21:58.289Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SecurityCN&#39;s blog">
-<meta name="twitter:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响">
+<meta name="twitter:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc-1 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影">
 <meta name="twitter:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/2d4bdfef5893c614625d22200e420a74.png">
 
 
@@ -363,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  395
+                  396
                 </span>
               
 
@@ -400,7 +400,7 @@
       
 
       
-        <p>漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc</p>
+        <p>漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc-1</p>
 <p>2019-10-09 14:36:25</p>
 <p>(漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg)</p>
 <p>Author：Ja0k</p>
