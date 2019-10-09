@@ -81,24 +81,23 @@
 
 
 
-<meta name="description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25  Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PH">
+<meta name="description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SecurityCN&#39;s blog">
 <meta property="og:url" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/index.html">
 <meta property="og:site_name" content="SecurityCN&#39;s blog">
-<meta property="og:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25  Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PH">
+<meta property="og:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/2d4bdfef5893c614625d22200e420a74.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/46fd8c6f736390b380364e6d307727ca.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/0aa0ffdb124bb25fa6993dccb7b203c3.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/cccd2fb43f5e1de2656dafd06cbdc8e2.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/deb907880fabab9ca9176b5a50d1d877.png">
-<meta property="og:updated_time" content="2019-10-09T07:06:51.283Z">
+<meta property="og:updated_time" content="2019-10-09T07:19:32.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SecurityCN&#39;s blog">
-<meta name="twitter:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25  Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PH">
-<meta name="twitter:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg">
+<meta name="twitter:description" content="漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc 2019-10-09 14:36:25 (漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg) Author：Ja0k 事件背景 上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响">
+<meta name="twitter:image" content="https://securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/2d4bdfef5893c614625d22200e420a74.png">
 
 
 
@@ -364,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  371
+                  395
                 </span>
               
 
@@ -403,7 +402,7 @@
       
         <p>漏洞复现-Joomla-3.4.6远程代码执行漏洞复现及Poc</p>
 <p>2019-10-09 14:36:25</p>
-<p><img src="//securitycn.github.io/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg" alt="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1570614420624&amp;di=3589aae5c04a63cb48c342d238d8ec4a&amp;imgtype=0&amp;src=http%3A%2F%2Fpic4.zhimg.com%2Fv2-3c7f0d3a25ce44cc4d4656981e53e9e6_1200x500.jpg"></p>
+<p>(漏洞复现-joomla-3-4-6远程代码执行漏洞原理分析和poc-1/fd87976bb0347e8a60d5929c0cd96b58.jpg)</p>
 <p>Author：Ja0k</p>
 <p><strong>事件背景</strong></p>
 <p>上周，意大利安全公司 Hacktive Security的研究员 Alessandro<br>Groppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-8562。建议使用就版本的用户更新到安全版本。</p>
