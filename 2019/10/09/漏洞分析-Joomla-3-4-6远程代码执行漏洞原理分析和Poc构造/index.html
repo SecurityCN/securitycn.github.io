@@ -84,7 +84,7 @@
 <meta name="description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
 <meta name="keywords" content="Web安全,漏洞分析,对象注入">
 <meta property="og:type" content="article">
-<meta property="og:title" content="漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">
+<meta property="og:title" content="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">
 <meta property="og:url" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/index.html">
 <meta property="og:site_name" content="SecurityCN&#39;s blog">
 <meta property="og:description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
@@ -104,9 +104,9 @@
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-16-05-03.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-17-35-50.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-22-27-37.png">
-<meta property="og:updated_time" content="2019-10-10T01:53:48.820Z">
+<meta property="og:updated_time" content="2019-10-10T01:55:38.877Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">
+<meta name="twitter:title" content="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">
 <meta name="twitter:description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
 <meta name="twitter:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/fd87976bb0347e8a60d5929c0cd96b58.jpg">
 
@@ -144,7 +144,7 @@
 
 
 
-  <title>漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造 | SecurityCN's blog</title>
+  <title>漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造 | SecurityCN's blog</title>
   
 
 
@@ -330,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造</h1>
+          <h1 class="post-title" itemprop="name headline">漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造</h1>
         
 
         <div class="post-meta">
@@ -561,7 +561,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/</a>
+    <a href="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -765,7 +765,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
           </li>
         
           <li>
-            <a href="/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造" target="_blank">漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造</a>
+            <a href="/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造" target="_blank">漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造</a>
           </li>
         
           <li>
