@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-16-05-03.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-17-35-50.png">
 <meta property="og:image" content="https://securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-22-27-37.png">
-<meta property="og:updated_time" content="2019-10-10T01:55:38.877Z">
+<meta property="og:updated_time" content="2019-10-10T01:59:38.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造">
 <meta name="twitter:description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
@@ -488,8 +488,9 @@
 <h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="#漏洞分析"></a>#漏洞分析</h3><p>这个漏洞是和Joomla的会话的运作机制有关，Joomla 会话以 PHP Objects 的形式存储在数据库中且由 PHP 会话函数处理，但是由于Mysql无法保存Null 字节，函数在将session写入数据库和读取时会对象因大小不正确而导致不合法从而溢出。因为未认证用户的会话也可存储，所以该对象注入 (Object Injection) 可以在未登录认证的情况下攻击成功，导致RCE。</p>
 <p><strong>1.溢出</strong><br>当我们在 Joomla中执行 POST 请求时，通常会有303重定向将我们重定向至结果页。这是利用的重要事项，因为第一个请求（含参数）将只会导致 Joomla 执行动作并存储（例如调用write() 函数）会话，之后303重定向将进行检索（如调用read() 函数）并将信息显示给用户。</p>
 <p>漏洞利用文件<br>‘libraries/joomla/session/storage/database.php’中定义的函数 read()和 write()由session_set_save_handler()设置，作为‘libraries/joomla/session/session.php:__start’ session_start() 调用的读和写处理程序。<br>由于Mysql无法保存Null 字节，libraries/joomla/session/storage/database.php的write函数在将数据存储到数据库之前（write函数）会用‘\0\0\0’替换‘\x00\x2a\x00’(chr(0).’<em>’.chr(0))，而在序列化对象中， $protected 变量被赋予‘\x00\x2a\x00’前缀。<br><img src="//securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-17-35-50.png" alt><br>当读取数据库中的数据时， read 函数会用‘\x00\x2a\x00’（N</em>N）替换‘\0\0\0’，重构原始对象。<br><img src="//securitycn.github.io/2019/10/09/漏洞分析-Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/2019-10-09-22-27-37.png" alt><br>这种替换的主要问题在于它用3个字节替换了6个字节。这种代码在Joomla3.0.0到3.4.6 版本中一直存在。从 3.4.7 版本开始，会话是 base64 编码形式存储在数据库中。<br>如之前所述，我们能够通过动作参数的读取和写入来操纵该会话对象进行注入将被3个字节替换的‘\0\0\0’，导致对象因大小不正确（字节长度不同）导致不合法，造成溢出。<br><strong>举个栗子</strong><br>比如一个登录表单，在 username 字段中放入‘my\x00\x2a\x00username’，经过write函数处理后将在数据库中得到如下对象：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">当该会话对象被 read 函数中读取时，‘\0\0\0’将被以如上所述方式所替代，得到如下值：</span><br><span class="line">```s:8:s:&quot;username&quot;;s:16:&quot;myN*Nusername&quot; --&gt;不合法的大小```  </span><br><span class="line">被替换的字符串只有13个字节长，但生命的字符串长度仍然是16个字节！</span><br><span class="line">就可以愉快地利用这种“溢出”构造一个可以实现 RCE 的一个新的对象，在可以控制反序列化对象以后，我们只需构造一个能够一步步调用的执行链，即可进行一些危险的操作了。</span><br><span class="line">在本次曝光的Poc中就是用username字段进行溢出，password字段进行对象注入，如果插入任意serialize字符串，构造反序列化漏洞了，到这里就和之前的漏洞CVE-2015-8562的比较相似了。</span><br><span class="line"></span><br><span class="line">**2. 对象注入（反序列化）**  (本部分参考PHITHON的博客)</span><br><span class="line">CVE-2015-8562的Poc如下</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s:8:s:&quot;username&quot;;s:16:&quot;my\0\0\0username&quot;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">当该会话对象被 read 函数中读取时，‘\0\0\0’将被以如上所述方式所替代，得到如下值：</span><br></pre></td></tr></table></figure>
 
+<p>s:8:s:”username”;s:16:”myN*Nusername” –&gt;不合法的大小<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">被替换的字符串只有13个字节长，但生命的字符串长度仍然是16个字节！</span><br><span class="line">就可以愉快地利用这种“溢出”构造一个可以实现 RCE 的一个新的对象，在可以控制反序列化对象以后，我们只需构造一个能够一步步调用的执行链，即可进行一些危险的操作了。</span><br><span class="line">在本次曝光的Poc中就是用username字段进行溢出，password字段进行对象注入，如果插入任意serialize字符串，构造反序列化漏洞了，到这里就和之前的漏洞CVE-2015-8562的比较相似了。</span><br><span class="line"></span><br><span class="line">**2. 对象注入（反序列化）**  (本部分参考PHITHON的博客)</span><br><span class="line">CVE-2015-8562的Poc如下</span><br></pre></td></tr></table></figure></p>
 <p>User-Agent: 123}__test|O:21:”JDatabaseDriverMysqli”:3:{s:4:”\0\0\0a”;O:17:”JSimplepieFactory”:0:{}s:21:”\0\0\0disconnectHandlers”;a:1:{i:0;a:2:{i:0;O:9:”SimplePie”:5:{s:8:”sanitize”;O:20:”JDatabaseDriverMysql”:0:{}s:5:”cache”;b:1;s:19:”cache_name_function”;s:6:”assert”;s:10:”javascript”;i:9999;s:8:”feed_url”;s:37:”phpinfo();JFactory::getConfig();exit;”;}i:1;s:4:”init”;}}s:13:”\0\0\0connection”;i:1;}4</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在这个执行链中，分别利用了如下类：</span><br><span class="line">JDatabaseDriverMysqli</span><br><span class="line">SimplePie</span><br><span class="line"></span><br><span class="line">**2.1 JDatabaseDriverMysqli类**  </span><br><span class="line">我们可以在JDatabaseDriverMysqli类的析构函数里找到一处敏感操作：</span><br></pre></td></tr></table></figure>
 
@@ -593,8 +594,8 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc/" rel="next" title="漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造">
-                <i class="fa fa-chevron-left"></i> 漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造
+              <a href="/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/" rel="next" title="【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？">
+                <i class="fa fa-chevron-left"></i> 【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？
               </a>
             
           </div>
@@ -682,7 +683,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -769,15 +770,15 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
           </li>
         
           <li>
-            <a href="/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc/" title="漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造" target="_blank">漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造</a>
-          </li>
-        
-          <li>
             <a href="/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/" title="【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？" target="_blank">【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？</a>
           </li>
         
           <li>
             <a href="/2019/09/27/漏洞分析-CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析-1/" title="漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析" target="_blank">漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/24/泛微OA-E-cology-远程代码执行漏洞分析、过滤器绕过及批量检测工具/" title="泛微OA E-cology 远程代码执行漏洞分析、过滤器绕过及批量检测工具" target="_blank">泛微OA E-cology 远程代码执行漏洞分析、过滤器绕过及批量检测工具</a>
           </li>
         
       </ul>
@@ -835,7 +836,7 @@ https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">11.9k</span>
+    <span title="Site words total count">9k</span>
   
 </div>
 <div class="powered-by">
