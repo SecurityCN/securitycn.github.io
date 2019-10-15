@@ -1,0 +1,11 @@
+User-agent: * Allow: /
+Allow: /tags/
+Allow: /archives/
+Allow: /about/
+Allow: /categories/
+Disallow: /2019/
+Disallow: /js/
+Disallow: /css/
+Disallow: /images/
+Sitemap: www.securityinfo.cn/sitemap.xml
+Sitemap: www.securityinfo.cn/baidusitemap.xml
