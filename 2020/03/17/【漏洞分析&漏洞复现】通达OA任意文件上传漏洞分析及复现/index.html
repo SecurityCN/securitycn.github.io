@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Web安全,代码审计,安全研究,">
+  <meta name="keywords" content="代码审计,安全研究,PHP-Web安全,">
 
 
 
@@ -81,34 +81,29 @@
 
 
 
-<meta name="description" content="最近安全圈曝光了很多漏洞，之前审计了泛微 OARCE 漏洞,今天审计分析phpMyAdmin_CSRF漏洞  #事件背景 2019年9月16日，网络上曝光phpMyAdmin4.9.0.1版本中存在跨站请求伪造漏洞，攻击者可利用该漏洞通过受影响客户端向服务器发送非预期的请求。这个漏洞影响phpMyAdmin的版本最高到4.9.0.1，这是phpMyAdmin目前最新的发行版本。因为这个漏洞危及的范">
-<meta name="keywords" content="Web安全,代码审计,安全研究">
+<meta name="description" content="【漏洞分析&amp;amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现 一、事件背景近日，通达OA在官方论坛发布了紧急通知，提供了针对部分用户反馈遭到勒索病毒攻击的安全加固程序。根据公告，遭受攻击的OA服务器首页被恶意篡改，伪装成OA系统错误提示页面让用户下载安装插件，同时服务器上文件被勒索病毒重命名加密，论坛中有多个用户反馈中招（具体现象为：主页被篡改、站点文件扩展名被修改、并生成">
+<meta name="keywords" content="代码审计,安全研究,PHP-Web安全">
 <meta property="og:type" content="article">
-<meta property="og:title" content="漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析">
-<meta property="og:url" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/index.html">
+<meta property="og:title" content="【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现">
+<meta property="og:url" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/index.html">
 <meta property="og:site_name" content="SecurityCN&#39;s blog">
-<meta property="og:description" content="最近安全圈曝光了很多漏洞，之前审计了泛微 OARCE 漏洞,今天审计分析phpMyAdmin_CSRF漏洞  #事件背景 2019年9月16日，网络上曝光phpMyAdmin4.9.0.1版本中存在跨站请求伪造漏洞，攻击者可利用该漏洞通过受影响客户端向服务器发送非预期的请求。这个漏洞影响phpMyAdmin的版本最高到4.9.0.1，这是phpMyAdmin目前最新的发行版本。因为这个漏洞危及的范">
+<meta property="og:description" content="【漏洞分析&amp;amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现 一、事件背景近日，通达OA在官方论坛发布了紧急通知，提供了针对部分用户反馈遭到勒索病毒攻击的安全加固程序。根据公告，遭受攻击的OA服务器首页被恶意篡改，伪装成OA系统错误提示页面让用户下载安装插件，同时服务器上文件被勒索病毒重命名加密，论坛中有多个用户反馈中招（具体现象为：主页被篡改、站点文件扩展名被修改、并生成">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/167c922ef0588ef9c6d1ab7d094d949b.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/9e8fc902aacf82840cccd17f90ab83bd.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/ea5c75eeed8bbe3e310faaf7f9b97936.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/2e76bc27ba4735b802e425615761071e.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/6130b5ae696f2c6f000d21d72fd2aa40.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/eebbd0c7eedbe9971988ee180a396c22.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/5a1eb534a668a8e9b2dc985757685037.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/10b4d4cf17f4b014696eee9ca0fe5114.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/e1c681fc2124332bca525909b4e02d0a.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/641a471fe84ab8db1ba4a70b98d09455.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/2b26684f8324249f3f3d8562ef103f3e.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/1246117a9b36f44eb69f2d8c8aec986d.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/227138ed284c1f8710999d00723d65c7.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/7216198f31517acc09ef04f6be4b2150.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/680e2a08b1f4315111b46c6638a1b045.jpg">
-<meta property="og:updated_time" content="2019-10-31T08:24:21.503Z">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-06-28.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-03-16.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-41-32.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-01-40.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-22-49.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-16-10-21.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-17-29-31.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-41-20.png">
+<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-35-20.png">
+<meta property="og:updated_time" content="2020-03-19T03:06:12.264Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析">
-<meta name="twitter:description" content="最近安全圈曝光了很多漏洞，之前审计了泛微 OARCE 漏洞,今天审计分析phpMyAdmin_CSRF漏洞  #事件背景 2019年9月16日，网络上曝光phpMyAdmin4.9.0.1版本中存在跨站请求伪造漏洞，攻击者可利用该漏洞通过受影响客户端向服务器发送非预期的请求。这个漏洞影响phpMyAdmin的版本最高到4.9.0.1，这是phpMyAdmin目前最新的发行版本。因为这个漏洞危及的范">
-<meta name="twitter:image" content="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/167c922ef0588ef9c6d1ab7d094d949b.png">
+<meta name="twitter:title" content="【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现">
+<meta name="twitter:description" content="【漏洞分析&amp;amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现 一、事件背景近日，通达OA在官方论坛发布了紧急通知，提供了针对部分用户反馈遭到勒索病毒攻击的安全加固程序。根据公告，遭受攻击的OA服务器首页被恶意篡改，伪装成OA系统错误提示页面让用户下载安装插件，同时服务器上文件被勒索病毒重命名加密，论坛中有多个用户反馈中招（具体现象为：主页被篡改、站点文件扩展名被修改、并生成">
+<meta name="twitter:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png">
 
 
 
@@ -138,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/">
+  <link rel="canonical" href="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/">
 
 
 
 
 
-  <title>漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析 | SecurityCN's blog</title>
+  <title>【漏洞分析&漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现 | SecurityCN's blog</title>
   
 
 
@@ -313,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/">
+    <link itemprop="mainEntityOfPage" href="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="扫码关注公众号(SecurityCN)">
@@ -330,7 +325,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析</h2>
+          <h2 class="post-title" itemprop="name headline">【漏洞分析&漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现</h2>
         
 
         <div class="post-meta">
@@ -342,8 +337,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-27T23:31:47+08:00">
-                2019-09-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T23:11:47+08:00">
+                2020-03-17
               </time>
             
 
@@ -396,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.8k
                 </span>
               
 
@@ -412,7 +407,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  7
                 </span>
               
             </div>
@@ -433,96 +428,82 @@
       
 
       
-        <p>最近安全圈曝光了很多漏洞，之前审计了泛微 OA<br>RCE 漏洞,今天审计分析phpMyAdmin_CSRF漏洞</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/167c922ef0588ef9c6d1ab7d094d949b.png" alt></p>
-<p><strong>#事件背景</strong></p>
-<p>2019年9月16日，网络上曝光phpMyAdmin4.9.0.1版本中存在跨站请求伪造漏洞，攻击者可利用该漏洞通过受影响客户端向服务器发送非预期的请求。这个漏洞影响phpMyAdmin的版本最高到4.9.0.1，这是phpMyAdmin目前最新的发行版本。因为这个漏洞危及的范围比较小，仅允许攻击者删除目标服务器里的，phpMyAdmin控制面板中关于setup页面中的服务器配置。攻击者所需要做的仅仅是发送一个精心设计的URL给网页的管理员，这个管理员需要在他的浏览器登录到phpMyAdmin控制面板，然后在同一个浏览器点击这个URL，就会不知不觉地删除了配置里的服务器。</p>
-<p><strong>#漏洞信息</strong></p>
-<table>
+        <p>【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png" alt></p>
+<h4 id="一、事件背景"><a href="#一、事件背景" class="headerlink" title="一、事件背景"></a>一、事件背景</h4><p>近日，通达OA在官方论坛发布了紧急通知，提供了针对部分用户反馈遭到勒索病毒攻击的安全加固程序。根据公告，遭受攻击的OA服务器首页被恶意篡改，伪装成OA系统错误提示页面让用户下载安装插件，同时服务器上文件被勒索病毒重命名加密，论坛中有多个用户反馈中招（具体现象为：主页被篡改、站点文件扩展名被修改、并生成一个勒索提示文本文件），论坛地址：<br><a href="http://club.tongda2000.com/forum.php?mod=viewthread&amp;tid=128367&amp;extra=page%3D1" target="_blank" rel="noopener">http://club.tongda2000.com/forum.php?mod=viewthread&amp;tid=128367&amp;extra=page%3D1</a></p>
+<p>通过在v11.3版本的测试发现全版本的任意文件上传漏洞结合v11版本的文件包含漏洞可以造成远程命令执行，默认为System权限，恶意攻击者可以成功上传Webshell后门，并进一步释放勒索病毒，危害较大。</p>
+<h4 id="二、漏洞信息"><a href="#二、漏洞信息" class="headerlink" title="二、漏洞信息"></a>二、漏洞信息</h4><table>
 <thead>
 <tr>
 <th>漏洞名称</th>
-<th>phpMyAdmin_CSRF漏洞</th>
+<th>通达OA任意文件上传漏洞</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>CVE编号</td>
-<td>CVE-2019-12922</td>
+<td>-</td>
 </tr>
 <tr>
-<td>CNVD编号</td>
-<td>CNVD-2019-31657</td>
-</tr>
-<tr>
-<td>影响版本</td>
-<td>phpMyAdmin &lt;=4.9.0.1（据说phpMyAdmin 5.0.0-alpha1版也存在）</td>
+<td>影响范围</td>
+<td>通达OA 2013/2013增强/2015/2016/2017/v11版本</td>
 </tr>
 <tr>
 <td>威胁等级</td>
-<td>中危</td>
+<td>高危</td>
 </tr>
 <tr>
 <td>公开时间</td>
-<td>2019年9月16日</td>
+<td>2020年3月13日</td>
 </tr>
 </tbody></table>
-<p><strong>#漏洞分析</strong></p>
-<p><strong>1.什么是CSRF？</strong></p>
-<p>CSRF(Cross-site request forgery)跨站请求伪造，也被称为One Click<br>Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用。</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/9e8fc902aacf82840cccd17f90ab83bd.png" alt></p>
-<p>上图为CSRF攻击的一个简单模型：用户访问恶意网站B，恶意网站B返回给用户的HTTP信息中要求用户访问网站A，而由于用户和网站A之间可能已经有信任关系导致这个请求就像用户真实发送的一样会被执行。</p>
-<p><strong>2.静态审计</strong></p>
-<p>漏洞存在于phpmyadmin/setup/index.php文件，该文件为安装phpmyadmin的脚本，可以在此脚本中创建连接新的Mysql数据库服务器</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/ea5c75eeed8bbe3e310faaf7f9b97936.png" alt></p>
-<p>允许get请求参数为page，</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/2e76bc27ba4735b802e425615761071e.png" alt></p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/6130b5ae696f2c6f000d21d72fd2aa40.png" alt></p>
-<p>再跟进到/setup/frames/$page.inc.php 也就是 /setup/frames/server.inc.php文件</p>
-<p>这个php从Get请求获取了 mode和id这两个参数的值，</p>
-<p>mode有三种（’edit’、’remove’、’revert’）</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/eebbd0c7eedbe9971988ee180a396c22.png" alt></p>
-<p>当mode=remove且Servers/$id不为null时，使用removeServer方法删除server然后Location跳转到/phpmyadmin/setup/index.php首页</p>
-<p>我们再跟进看下phpMyAdmin/libraries/config/ConfigFile.class.php的removeServer方法  </p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/5a1eb534a668a8e9b2dc985757685037.png" alt></p>
-<p>unset这句是关键 unset函数是销毁指定变量，在这里就是删掉$server</p>
-<p><strong>```unset</strong>($_SESSION[$this-&gt;<strong>id</strong>][<strong>‘Servers’</strong>][$last_server]);```</p>
-<p>导致CSRF的根据原因为phpmyamdin，没有全局token，只有在登录/phpmyadmin/index.php后，才会创建token</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/10b4d4cf17f4b014696eee9ca0fe5114.png" alt></p>
-<p>所以在设置服务器页面phpmyadmin/setup/index.php是没有token的，故此无法防御跨站请求伪造攻击，这样$server就通过CSRF漏洞被删除了。</p>
-<p>但是这个漏洞不能执行Sql语句拖库，故此危害等级不高，但是利用起来很简单，攻击者只需要知道服务器的URL，就能利用CSRF漏洞删除phpmyamdi配置中的服务器。</p>
-<p><strong>#漏洞复现</strong></p>
-<p>在浏览器打开</p>
-<p><a href="http://192.168.21.56/phpmyadmin/setup/index.php" target="_blank" rel="noopener">http://192.168.21.56/phpmyadmin/setup/index.php</a></p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/e1c681fc2124332bca525909b4e02d0a.png" alt></p>
-<p>为了方便后面CSRF漏洞能够成功删除服务器成功先New一个服务器</p>
-<p>点击New server就跳转到服务器创建页面</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/641a471fe84ab8db1ba4a70b98d09455.png" alt></p>
-<p>save之后跳转到之前setup/index.php页面</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/2b26684f8324249f3f3d8562ef103f3e.png" alt></p>
-<p>可以看到这里Delete按钮就是 Poc中的地址，点击这个delete就能删除这个server</p>
-<p>开始复现CSRF漏洞，构造Poc，新建一个CSRF.html文件写入以下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Deleting Server 1&lt;/p&gt;</span><br><span class="line">&lt;img src=&quot;</span><br><span class="line">http://192.168.31.56/phpmyadmin/setup/index.php?page=servers&amp;mode=remove&amp;id=1&quot;;style=&quot;display:none;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>漏洞名称</th>
+<th>通达OA文件包含漏洞</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CVE编号</td>
+<td>-</td>
+</tr>
+<tr>
+<td>影响范围</td>
+<td>通达OA v11版本</td>
+</tr>
+<tr>
+<td>威胁等级</td>
+<td>高危</td>
+</tr>
+<tr>
+<td>公开时间</td>
+<td>2020年3月13日</td>
+</tr>
+</tbody></table>
+<h4 id="三、漏洞分析"><a href="#三、漏洞分析" class="headerlink" title="三、漏洞分析"></a>三、漏洞分析</h4><h5 id="3-1-补丁对比"><a href="#3-1-补丁对比" class="headerlink" title="3.1 补丁对比"></a>3.1 补丁对比</h5><p><a href="http://www.tongda2000.com/news/673.php" target="_blank" rel="noopener">http://www.tongda2000.com/news/673.php</a><br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-06-28.png" alt><br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-03-16.png" alt></p>
+<p>根据通达官方的修复说明，需要替换MYOA\webroot下的文件<br>下载官方发布的所有版本的补丁分析后发现：<br>2013/2013增强/2015/2016/2017版本的补丁只有1个文件ispirit\im\upload.php；<br>v11版本的的补丁文件与此次漏洞相关的有ispirit\im\upload.php 和ispirit/interface/gateway.php 等多个文件，所以v11 版本同时受2个漏洞的影响，其他版本暂不确定。</p>
+<p>本次分析以通达v11 版本 为例</p>
+<ul>
+<li>注意：通达OA的php文件采用的是zend54 加密，可以使用 SeayDzend工具进行解密，工具下载地址见附录</li>
+</ul>
+<h6 id="补丁1-ispirit-im-upload-php-任意文件上传漏洞"><a href="#补丁1-ispirit-im-upload-php-任意文件上传漏洞" class="headerlink" title="补丁1: ispirit\im\upload.php 任意文件上传漏洞"></a>补丁1: ispirit\im\upload.php 任意文件上传漏洞</h6><p>对比补丁前后发现 主要是为了修复未登录任意上传文件，有2处更改<br>首先第1处，就是关于登陆验证文件’./auth.php’ 的调用<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-41-32.png" alt><br>但在upload.php未修复前，有一个if判断如果$P存在且非空就不需要经过auth.php验证即可执行后续代码。利用此处逻辑漏洞可绕过登陆验证直接上传文件。补丁文件中是直接强制include_once ‘./auth.php’; 进行登录验证。<br>第2处，修改是在upload.php中 增加了登录的与数据库中的Session校验</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$time = time();</span><br><span class="line">$sql = &apos;select * from im_recent where ((from_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos; and to_id = \&apos;&apos; . $DEST_UID . &apos;\&apos;) or (from_id = \&apos;&apos; . $DEST_UID . &apos;\&apos; and to_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;)) and type = \&apos;1\&apos;&apos;;</span><br><span class="line">$cursor = exequery(TD::conn(), $sql);</span><br><span class="line">if (0 &lt; mysql_num_rows($cursor)) &#123;</span><br><span class="line">    $sql1 = &apos;UPDATE im_recent SET update_time = \&apos;&apos; . $time . &apos;\&apos; WHERE ((from_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos; and to_id = \&apos;&apos; . $DEST_UID . &apos;\&apos;) or (from_id = \&apos;&apos; . $DEST_UID . &apos;\&apos; and to_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;)) and type = \&apos;1\&apos;&apos;;</span><br><span class="line">    exequery(TD::conn(), $sql1);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $sql2 = &apos;INSERT INTO im_recent (from_id,to_id,update_time,type) VALUES (\&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;,\&apos;&apos; . $DEST_UID . &apos;\&apos;,\&apos;&apos; . $time . &apos;\&apos;,\&apos;1\&apos;)&apos;;</span><br><span class="line">    exequery(TD::conn(), $sql2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>在同一个浏览器中执行</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/1246117a9b36f44eb69f2d8c8aec986d.png" alt></p>
-<p>通过抓包设置断点可以看到该请求</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/227138ed284c1f8710999d00723d65c7.png" alt></p>
-<p>该请求删除了id为1的server</p>
-<p>再返回/setup/index.php 查看发现之前新建的 id为1 ，name为11111的server被删除</p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/7216198f31517acc09ef04f6be4b2150.png" alt></p>
-<p>本次分析复现的代码及POC会在本人的Github上分享<a href="https://github.com/securitycn/" target="_blank" rel="noopener">https://github.com/securitycn/</a></p>
-<p><strong>#修复建议</strong></p>
-<p>厂商尚未提供漏洞修复方案，请关注厂商主页更新： <a href="https://www.phpmyadmin.net/" target="_blank" rel="noopener">https://www.phpmyadmin.net/</a></p>
-<p><strong>#免责声明</strong></p>
-<p>本文中提到的漏洞利用Poc和脚本仅供研究学习使用，请遵守《网络安全法》等相关法律法规。</p>
-<p><strong>#版权</strong></p>
-<p>本文为作者原创禁止一切非授权转载和抄袭行为，如需转载请联系在公众号后台留言（留言请说明来意），转载请注明出处及下方二维码。</p>
-<p><strong>#求关注</strong></p>
-<p>欢迎大家留言，喜欢文章的朋友可以关注本公众号</p>
-<p>微信公众号：securitycn</p>
-<p>博客：<a href="https://securitycn.github.io" target="_blank" rel="noopener">https://securitycn.github.io</a></p>
-<p>Github: <a href="https://github.com/securitycn" target="_blank" rel="noopener">https://github.com/securitycn</a></p>
-<p><img src="//www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/680e2a08b1f4315111b46c6638a1b045.jpg" alt></p>
+<p>分析完补丁之后我们来整体分析下存在漏洞upload.php 文件<br>1.先判断$P 参数是否存在调用Session和 auth登录认证，当$P非空时此处可以绕过auth.php登录验证<br>2.判断$DEST_UID是否为空；其次如果DEST_UID 中存在有<code>,</code>，则通过intval获取整数值；最后当$DEST_UID=0时，UPLOAD_MODE要为2 否接收方ID无效。<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-01-40.png" alt><br>3.UPLOAD_MODE 有3种模式，vociemsg\weixunshare\im，其中im是默认模式，<br>$_FILES全局变量大于等于1的时候(就是有文件上传的时候)，会调用<br>upload方法进行处理，这里的文件上传的 name 为name=”ATTACHMENT<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-22-49.png" alt></p>
+<ol start="4">
+<li>跟进inc\utility_file.php 的upload方法,发现有个文件名校验函数is_uploadable<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-16-10-21.png" alt><br>我们看下关于文件后缀名的获取方式，是通过strrpos 函数获取<code>.</code>最后一次出现的位置开始到后面的3个字符串，不能为<code>php</code>,其实黑名单有很多种方式绕过，比如上传后缀名为<code>.phtml</code>，<code>.cpt</code> 等都可以绕过<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function is_uploadable($FILE_NAME)</span><br><span class="line">&#123;</span><br><span class="line">	$POS = strrpos($FILE_NAME, &quot;.&quot;);</span><br><span class="line"></span><br><span class="line">	if ($POS === false) &#123;</span><br><span class="line">		$EXT_NAME = $FILE_NAME;</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		if (strtolower(substr($FILE_NAME, $POS + 1, 3)) == &quot;php&quot;) &#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		$EXT_NAME = strtolower(substr($FILE_NAME, $POS + 1));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h6 id="补丁2：ispirit-interface-gateway-php-文件包含漏洞"><a href="#补丁2：ispirit-interface-gateway-php-文件包含漏洞" class="headerlink" title="补丁2：ispirit/interface/gateway.php 文件包含漏洞"></a>补丁2：ispirit/interface/gateway.php 文件包含漏洞</h6><p>通过对比v11.3版本的补丁中gateway.php前后代码发现 第47行后面，增加了对url地址种的<code>..</code>符号的判断，防止用户读取其他目录文件。<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-17-29-31.png" alt><br>通读修复之前的代码发现，整个流程为foreach循环解析$json，如果$key键等于字符串<code>url</code> ,则$url={$key所对应的值}，如果$url非空则调用 ，且数据中包含’general/‘ or ‘ispirit/‘or ‘module/‘时，就会调用include_once对$url进行包含。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">if ($json) &#123;</span><br><span class="line">	$json = stripcslashes($json);</span><br><span class="line">	$json = (array) json_decode($json);</span><br><span class="line"></span><br><span class="line">	foreach ($json as $key =&gt; $val ) &#123;</span><br><span class="line">		if ($key == &quot;data&quot;) &#123;</span><br><span class="line">			$val = (array) $val;</span><br><span class="line"></span><br><span class="line">			foreach ($val as $keys =&gt; $value ) &#123;</span><br><span class="line">				$keys = $value;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if ($key == &quot;url&quot;) &#123;</span><br><span class="line">			$url = $val;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if ($url != &quot;&quot;) &#123;</span><br><span class="line">		if (substr($url, 0, 1) == &quot;/&quot;) &#123;</span><br><span class="line">			$url = substr($url, 1);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if ((strpos($url, &quot;general/&quot;) !== false) || (strpos($url, &quot;ispirit/&quot;) !== false) || (strpos($url, &quot;module/&quot;) !== false)) &#123;</span><br><span class="line">			include_once $url;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么就可以在url中传入<code>../</code> 进行跨目录，从而可以包含第1个漏洞上传的php文件，造成RCE</p>
+<h4 id="四、漏洞复现"><a href="#四、漏洞复现" class="headerlink" title="四、漏洞复现"></a>四、漏洞复现</h4><p>*本次复现以通达OAv11.3 版本 为例<br>第1个漏洞的Poc的构造需要满足四个条件: P非空、DEST_UID非空且为数字、UPLOAD_MODE为1或2或3、ATTACHMENT的filename后缀名不能为<code>php</code><br>最后构造的Payload如下<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-41-20.png" alt><br>上传了1个文件名为<code>a.phtml</code>的php文件 绕过黑名单检测<br>路径为 attach/im/2003/72566742.a.phtm  但该目录不在webroot下不能直接执行webshell，才需要利用后面的文件包含漏洞跨目录解析<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-35-20.png" alt><br>最后RCE成功，有一点需要提醒下，通达OA开启了 disable_funcation 功能 很多常见的命令执行函数如 exec、eval、system等都被禁止了，需要bypass<br>想学习绕过的可以参考：<br><code>https://www.cnblogs.com/-qing-/p/10944118.html</code></p>
+<h4 id="五、修复建议"><a href="#五、修复建议" class="headerlink" title="五、修复建议"></a>五、修复建议</h4><p>官方提供了以下可能受到影响的版本的补丁：<br>2013版、2013增强版、2015版、2016版、2017版、V11版本<br>下载地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">V11版：http://cdndown.tongda2000.com/oa/security/2020_A1.11.3.exe</span><br><span class="line">2017版：http://cdndown.tongda2000.com/oa/security/2020_A1.10.19.exe</span><br><span class="line">2016版：http://cdndown.tongda2000.com/oa/security/2020_A1.9.13.exe</span><br><span class="line">2015版：http://cdndown.tongda2000.com/oa/security/2020_A1.8.15.exe</span><br><span class="line">2013增强版：http://cdndown.tongda2000.com/oa/security/2020_A1.7.25.exe</span><br><span class="line">2013版：http://cdndown.tongda2000.com/oa/security/2020_A1.6.20.exe</span><br></pre></td></tr></table></figure>
+
+<h4 id="六、附录"><a href="#六、附录" class="headerlink" title="六、附录"></a>六、附录</h4><h5 id="本次分析及复现的相关工具地址"><a href="#本次分析及复现的相关工具地址" class="headerlink" title="本次分析及复现的相关工具地址"></a>本次分析及复现的相关工具地址</h5><p><a href="https://github.com/SecurityCN/Vulnerability-analysis/tree/master/通达OA3月漏洞" target="_blank" rel="noopener">https://github.com/SecurityCN/Vulnerability-analysis/tree/master/通达OA3月漏洞</a></p>
+<h5 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h5><p>*<a href="http://club.tongda2000.com/forum.php?mod=viewthread&amp;tid=128377&amp;extra=page%3D1" target="_blank" rel="noopener">http://club.tongda2000.com/forum.php?mod=viewthread&amp;tid=128377&amp;extra=page%3D1</a><br>*<a href="https://www.webshell.cc/6379.html" target="_blank" rel="noopener">https://www.webshell.cc/6379.html</a><br>*<a href="https://www.cnblogs.com/-qing-/p/10944118.html" target="_blank" rel="noopener">https://www.cnblogs.com/-qing-/p/10944118.html</a></p>
 
       
     </div>
@@ -572,11 +553,11 @@
         <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者：</strong>
-    Ja0k
+    Ja0k@SecurityCN
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/" title="漏洞分析-CVE-2019-12922_phpMyAdmin小于等于4.9.0.1CSRF漏洞分析">https://www.securityinfo.cn/2019/09/27/【漏洞分析】CVE-2019-12922-phpMyAdmin小于等于4-9-0-1CSRF漏洞分析/</a>
+    <a href="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/" title="【漏洞分析&漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现">https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -591,11 +572,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Web安全/" rel="tag"># Web安全</a>
-          
             <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
           
             <a href="/tags/安全研究/" rel="tag"># 安全研究</a>
+          
+            <a href="/tags/PHP-Web安全/" rel="tag"># PHP-Web安全</a>
           
         </div>
       
@@ -608,8 +589,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/24/【漏洞分析】泛微OA-E-cology-远程代码执行漏洞分析、过滤器绕过及批量检测工具/" rel="next" title="泛微OA E-cology 远程代码执行漏洞分析、过滤器绕过及批量检测工具">
-                <i class="fa fa-chevron-left"></i> 泛微OA E-cology 远程代码执行漏洞分析、过滤器绕过及批量检测工具
+              <a href="/2020/03/12/【漏洞通告】CVE-2020-0796Windows SMBv3远程代码执行漏洞安全通告（内含Exp视频和检测方法）/" rel="next" title="【漏洞通告】CVE-2020-0796/Windows SMBv3远程代码执行漏洞安全通告(内含Exp视频和检测方法)">
+                <i class="fa fa-chevron-left"></i> 【漏洞通告】CVE-2020-0796/Windows SMBv3远程代码执行漏洞安全通告(内含Exp视频和检测方法)
               </a>
             
           </div>
@@ -617,10 +598,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/09/【漏洞分析】Joomla-3-4-6远程代码执行漏洞原理分析和Poc构造/" rel="prev" title="【漏洞分析】Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造">
-                【漏洞分析】Joomla-3.4.6远程代码执行漏洞原理分析和Poc构造 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -672,8 +649,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -797,6 +783,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、事件背景"><span class="nav-number">1.</span> <span class="nav-text">一、事件背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、漏洞信息"><span class="nav-number">2.</span> <span class="nav-text">二、漏洞信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、漏洞分析"><span class="nav-number">3.</span> <span class="nav-text">三、漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-补丁对比"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 补丁对比</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#补丁1-ispirit-im-upload-php-任意文件上传漏洞"><span class="nav-number">3.1.1.</span> <span class="nav-text">补丁1: ispirit\im\upload.php 任意文件上传漏洞</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#补丁2：ispirit-interface-gateway-php-文件包含漏洞"><span class="nav-number">3.1.2.</span> <span class="nav-text">补丁2：ispirit/interface/gateway.php 文件包含漏洞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、漏洞复现"><span class="nav-number">4.</span> <span class="nav-text">四、漏洞复现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、修复建议"><span class="nav-number">5.</span> <span class="nav-text">五、修复建议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、附录"><span class="nav-number">6.</span> <span class="nav-text">六、附录</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#本次分析及复现的相关工具地址"><span class="nav-number">6.1.</span> <span class="nav-text">本次分析及复现的相关工具地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考："><span class="nav-number">6.2.</span> <span class="nav-text">参考：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

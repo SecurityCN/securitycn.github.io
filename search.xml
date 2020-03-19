@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[【漏洞分析&漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现]]></title>
+    <url>%2F2020%2F03%2F17%2F%E3%80%90%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%26%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E3%80%91%E9%80%9A%E8%BE%BEOA%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%8F%8A%E5%A4%8D%E7%8E%B0%2F</url>
+    <content type="text"><![CDATA[【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现 一、事件背景近日，通达OA在官方论坛发布了紧急通知，提供了针对部分用户反馈遭到勒索病毒攻击的安全加固程序。根据公告，遭受攻击的OA服务器首页被恶意篡改，伪装成OA系统错误提示页面让用户下载安装插件，同时服务器上文件被勒索病毒重命名加密，论坛中有多个用户反馈中招（具体现象为：主页被篡改、站点文件扩展名被修改、并生成一个勒索提示文本文件），论坛地址：http://club.tongda2000.com/forum.php?mod=viewthread&amp;tid=128367&amp;extra=page%3D1 通过在v11.3版本的测试发现全版本的任意文件上传漏洞结合v11版本的文件包含漏洞可以造成远程命令执行，默认为System权限，恶意攻击者可以成功上传Webshell后门，并进一步释放勒索病毒，危害较大。 二、漏洞信息 漏洞名称 通达OA任意文件上传漏洞 CVE编号 - 影响范围 通达OA 2013/2013增强/2015/2016/2017/v11版本 威胁等级 高危 公开时间 2020年3月13日 漏洞名称 通达OA文件包含漏洞 CVE编号 - 影响范围 通达OA v11版本 威胁等级 高危 公开时间 2020年3月13日 三、漏洞分析3.1 补丁对比http://www.tongda2000.com/news/673.php 根据通达官方的修复说明，需要替换MYOA\webroot下的文件下载官方发布的所有版本的补丁分析后发现：2013/2013增强/2015/2016/2017版本的补丁只有1个文件ispirit\im\upload.php；v11版本的的补丁文件与此次漏洞相关的有ispirit\im\upload.php 和ispirit/interface/gateway.php 等多个文件，所以v11 版本同时受2个漏洞的影响，其他版本暂不确定。 本次分析以通达v11 版本 为例 注意：通达OA的php文件采用的是zend54 加密，可以使用 SeayDzend工具进行解密，工具下载地址见附录 补丁1: ispirit\im\upload.php 任意文件上传漏洞对比补丁前后发现 主要是为了修复未登录任意上传文件，有2处更改首先第1处，就是关于登陆验证文件’./auth.php’ 的调用但在upload.php未修复前，有一个if判断如果$P存在且非空就不需要经过auth.php验证即可执行后续代码。利用此处逻辑漏洞可绕过登陆验证直接上传文件。补丁文件中是直接强制include_once ‘./auth.php’; 进行登录验证。第2处，修改是在upload.php中 增加了登录的与数据库中的Session校验 12345678910$time = time();$sql = &apos;select * from im_recent where ((from_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos; and to_id = \&apos;&apos; . $DEST_UID . &apos;\&apos;) or (from_id = \&apos;&apos; . $DEST_UID . &apos;\&apos; and to_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;)) and type = \&apos;1\&apos;&apos;;$cursor = exequery(TD::conn(), $sql);if (0 &lt; mysql_num_rows($cursor)) &#123; $sql1 = &apos;UPDATE im_recent SET update_time = \&apos;&apos; . $time . &apos;\&apos; WHERE ((from_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos; and to_id = \&apos;&apos; . $DEST_UID . &apos;\&apos;) or (from_id = \&apos;&apos; . $DEST_UID . &apos;\&apos; and to_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;)) and type = \&apos;1\&apos;&apos;; exequery(TD::conn(), $sql1);&#125; else &#123; $sql2 = &apos;INSERT INTO im_recent (from_id,to_id,update_time,type) VALUES (\&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;,\&apos;&apos; . $DEST_UID . &apos;\&apos;,\&apos;&apos; . $time . &apos;\&apos;,\&apos;1\&apos;)&apos;; exequery(TD::conn(), $sql2);&#125; 分析完补丁之后我们来整体分析下存在漏洞upload.php 文件1.先判断$P 参数是否存在调用Session和 auth登录认证，当$P非空时此处可以绕过auth.php登录验证2.判断$DEST_UID是否为空；其次如果DEST_UID 中存在有,，则通过intval获取整数值；最后当$DEST_UID=0时，UPLOAD_MODE要为2 否接收方ID无效。3.UPLOAD_MODE 有3种模式，vociemsg\weixunshare\im，其中im是默认模式，$_FILES全局变量大于等于1的时候(就是有文件上传的时候)，会调用upload方法进行处理，这里的文件上传的 name 为name=”ATTACHMENT 跟进inc\utility_file.php 的upload方法,发现有个文件名校验函数is_uploadable我们看下关于文件后缀名的获取方式，是通过strrpos 函数获取.最后一次出现的位置开始到后面的3个字符串，不能为php,其实黑名单有很多种方式绕过，比如上传后缀名为.phtml，.cpt 等都可以绕过1234567891011121314function is_uploadable($FILE_NAME)&#123; $POS = strrpos($FILE_NAME, &quot;.&quot;); if ($POS === false) &#123; $EXT_NAME = $FILE_NAME; &#125; else &#123; if (strtolower(substr($FILE_NAME, $POS + 1, 3)) == &quot;php&quot;) &#123; return false; &#125; $EXT_NAME = strtolower(substr($FILE_NAME, $POS + 1)); &#125; 补丁2：ispirit/interface/gateway.php 文件包含漏洞通过对比v11.3版本的补丁中gateway.php前后代码发现 第47行后面，增加了对url地址种的..符号的判断，防止用户读取其他目录文件。通读修复之前的代码发现，整个流程为foreach循环解析$json，如果$key键等于字符串url ,则$url={$key所对应的值}，如果$url非空则调用 ，且数据中包含’general/‘ or ‘ispirit/‘or ‘module/‘时，就会调用include_once对$url进行包含。 123456789101112131415161718192021222324252627if ($json) &#123; $json = stripcslashes($json); $json = (array) json_decode($json); foreach ($json as $key =&gt; $val ) &#123; if ($key == &quot;data&quot;) &#123; $val = (array) $val; foreach ($val as $keys =&gt; $value ) &#123; $keys = $value; &#125; &#125; if ($key == &quot;url&quot;) &#123; $url = $val; &#125; &#125; if ($url != &quot;&quot;) &#123; if (substr($url, 0, 1) == &quot;/&quot;) &#123; $url = substr($url, 1); &#125; if ((strpos($url, &quot;general/&quot;) !== false) || (strpos($url, &quot;ispirit/&quot;) !== false) || (strpos($url, &quot;module/&quot;) !== false)) &#123; include_once $url; &#125; &#125; 那么就可以在url中传入../ 进行跨目录，从而可以包含第1个漏洞上传的php文件，造成RCE 四、漏洞复现*本次复现以通达OAv11.3 版本 为例第1个漏洞的Poc的构造需要满足四个条件: P非空、DEST_UID非空且为数字、UPLOAD_MODE为1或2或3、ATTACHMENT的filename后缀名不能为php最后构造的Payload如下上传了1个文件名为a.phtml的php文件 绕过黑名单检测路径为 attach/im/2003/72566742.a.phtm 但该目录不在webroot下不能直接执行webshell，才需要利用后面的文件包含漏洞跨目录解析最后RCE成功，有一点需要提醒下，通达OA开启了 disable_funcation 功能 很多常见的命令执行函数如 exec、eval、system等都被禁止了，需要bypass想学习绕过的可以参考：https://www.cnblogs.com/-qing-/p/10944118.html 五、修复建议官方提供了以下可能受到影响的版本的补丁：2013版、2013增强版、2015版、2016版、2017版、V11版本下载地址： 123456V11版：http://cdndown.tongda2000.com/oa/security/2020_A1.11.3.exe2017版：http://cdndown.tongda2000.com/oa/security/2020_A1.10.19.exe2016版：http://cdndown.tongda2000.com/oa/security/2020_A1.9.13.exe2015版：http://cdndown.tongda2000.com/oa/security/2020_A1.8.15.exe2013增强版：http://cdndown.tongda2000.com/oa/security/2020_A1.7.25.exe2013版：http://cdndown.tongda2000.com/oa/security/2020_A1.6.20.exe 六、附录本次分析及复现的相关工具地址https://github.com/SecurityCN/Vulnerability-analysis/tree/master/通达OA3月漏洞 参考：*http://club.tongda2000.com/forum.php?mod=viewthread&amp;tid=128377&amp;extra=page%3D1*https://www.webshell.cc/6379.html*https://www.cnblogs.com/-qing-/p/10944118.html]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>代码审计</tag>
+        <tag>安全研究</tag>
+        <tag>PHP-Web安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[【漏洞通告】CVE-2020-0796/Windows SMBv3远程代码执行漏洞安全通告(内含Exp视频和检测方法)]]></title>
     <url>%2F2020%2F03%2F12%2F%E3%80%90%E6%BC%8F%E6%B4%9E%E9%80%9A%E5%91%8A%E3%80%91CVE-2020-0796Windows%20SMBv3%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%AE%89%E5%85%A8%E9%80%9A%E5%91%8A%EF%BC%88%E5%86%85%E5%90%ABExp%E8%A7%86%E9%A2%91%E5%92%8C%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%EF%BC%89%2F</url>
     <content type="text"><![CDATA[【漏洞通告】CVE-2020-0796/Windows SMBv3远程代码执行漏洞安全通告(内含Exp视频和检测方法) 一、事件背景3月10日，微软发布了KB4551762安全更新，修复了在微软服务器消息块3.1.1（SMBv3）中发现的预授权RCE Windows 10漏洞（CVE-2020-0796）。在2020年3月补丁星期二活动日披露了关于该漏洞的细节，两天后公布安全更新。根据微软的说法，KB4551762安全更新解决的是“网络通信协议的问题，它提供共享访问文件、打印机和串行端口”。 二、漏洞信息 漏洞名称 Windows SMBv3远程代码执行漏洞 CVE编号 CVE-2020-0796 影响范围 影响Windows 10 1903及之后的各个版本 威胁等级 严重 公开时间 2020年3月10日 三、影响范围漏洞影响Windows 10 1903及之后的各个32位、64位版Windows，包括家用版、专业版、企业版、教育版。 12345678Windows 10 Version 1903 for 32-bit SystemsWindows 10 Version 1903 for x64-based SystemsWindows 10 Version 1903 for ARM64-based SystemsWindows Server, version 1903 (Server Core installation)Windows 10 Version 1909 for 32-bit SystemsWindows 10 Version 1909 for x64-based SystemsWindows 10 Version 1909 for ARM64-based SystemsWindows Server, version 1909 (Server Core installation) 正是目前主流操作系统版本，在个人、企业环境应用广泛。 四、漏洞分析SMB 3.1.1协议中处理压缩消息时，对其中数据没有经过安全检查，直接使用会引发内存破坏漏洞，可能被攻击者利用远程执行任意代码。攻击者利用该漏洞无须权限即可实现远程代码执行，受黑客攻击的目标系统只需开机在线即可能被入侵。该漏洞的后果十分接近永恒之蓝系列，都利用Windows SMB漏洞远程攻击获取系统最高权限，WannaCry勒索蠕虫就是利用永恒之蓝系列漏洞攻击工具制造的大灾难。 五、漏洞复现5.1 检测工具目前已公开漏洞检查工具https://github.com/SecurityCN/SMBGhost nmap扫描CVE-2020-0796的nse脚本https://github.com/SecurityCN/Vulnerability-analysis/blob/master/CVE-2020-0796/cve-2020-0796.nse 5.2 漏洞复现SophosLabs的Offensive Research团队开发并共享了一个本地特权升级概念验证的漏洞利用演示视频，该漏洞使具有低级特权的攻击者可以获得系统级特权Kryptos Logic表示：“即使不存在要分析的补丁程序，也很难发现SMB漏洞。”恶意攻击者几乎可以自己对CVE-2020-0796进行利用。 详细可以观看视频 *视频来自网络 六、修复建议6.1 升级微软官方已发布漏洞修复更新， 及时更新系统补丁——设置-&gt;更新和安全-&gt;Windows更新，点击“检查更新”，根据业务情况开展评估，下载并安装相应的安全补丁，更新后重启系统生效，并观察系统及业务运行状态。 下载离线补丁包：https://www.catalog.update.microsoft.com/Search.aspx?q=KB4551762 6.2 缓解措施对于暂时无法应用此安全更新的管理员，微软提供了针对SMB服务器的缓解措施，并建议使用此PowerShell命令禁用SMBv3压缩（无需重新启动，不会阻止SMB客户端的利用）： 123Set-ItemProperty -Path &quot;HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters&quot; DisableCompression -Type DWORD -Value 1 -Force 此外，还建议企业客户在企业外围防火墙处阻止TCP端口445，防止试图利用此漏洞对SMB服务器进行攻击。 参考：*https://www.bleepingcomputer.com/news/security/microsoft-releases-kb4551762-security-update-for-smbv3-vulnerability/*https://github.com/SecurityCN/SMBGhost*https://gist.github.com/nikallass/40f3215e6294e94cde78ca60dbe07394]]></content>
@@ -38,8 +51,8 @@
         <category>技术</category>
       </categories>
       <tags>
-        <tag>安全研究</tag>
         <tag>Web安全</tag>
+        <tag>安全研究</tag>
       </tags>
   </entry>
   <entry>
@@ -69,9 +82,9 @@
         <category>技术</category>
       </categories>
       <tags>
+        <tag>Web安全</tag>
         <tag>代码审计</tag>
         <tag>安全研究</tag>
-        <tag>Web安全</tag>
       </tags>
   </entry>
   <entry>
@@ -82,9 +95,9 @@
         <category>技术</category>
       </categories>
       <tags>
-        <tag>代码审计</tag>
         <tag>Web安全</tag>
         <tag>漏洞分析</tag>
+        <tag>代码审计</tag>
       </tags>
   </entry>
 </search>
