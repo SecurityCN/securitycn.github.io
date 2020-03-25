@@ -8,5 +8,5 @@ Allow: /2019/
 Disallow: /js/
 Disallow: /css/
 Disallow: /images/
-Sitemap: www.securityinfo.cn/sitemap.xml
-Sitemap: www.securityinfo.cn/baidusitemap.xml
+Sitemap: www.ja0k.com/sitemap.xml
+Sitemap: www.ja0k.com/baidusitemap.xml
